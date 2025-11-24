@@ -369,6 +369,7 @@ export class PromsComponent implements OnInit, OnDestroy{
 
   seeResults(questionnaire){
     console.log(questionnaire)
+    console.log(this.data)
     this.actualQuestionnaire = questionnaire;
     var tempresultsQuestionnaire = [];
     for (var i = 0; i < this.data.length; i++) {
@@ -422,7 +423,7 @@ export class PromsComponent implements OnInit, OnDestroy{
     }
 
     console.log(distintQuestionnaires)
-
+    console.log(this.actualQuestionnaire)
     this.max = -1;
     for (var i = 0; i < this.actualQuestionnaire.items.length; i++) {
       for (var j = 0; j < distintQuestionnaires.length; j++) {
