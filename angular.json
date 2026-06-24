@@ -34,7 +34,12 @@
               "node_modules/jquery/dist/jquery.min.js",
               "src/assets/azure-storage/azure-storage.common.js",
               "src/assets/azure-storage/azure-storage.blob.js"
-            ]
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src"
+              ]
+            }
           },
           "configurations": {
             "production": {
@@ -132,7 +137,12 @@
             "assets": [
               "src/assets",
               "src/favicon.ico"
-            ]
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src"
+              ]
+            }
           },
           "configurations": {
             "production": {
