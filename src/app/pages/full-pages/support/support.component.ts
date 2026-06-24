@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 import { Observable } from 'rxjs/Observable';
 
 @Component({
+    standalone: false,
   selector: 'app-support',
   templateUrl: './support.component.html',
   styleUrls: ['./support.component.scss'],

@@ -8,6 +8,7 @@ import {
   } from '@angular/core';
   
   @Directive({
+    standalone: false,
     selector: '[appDnd]'
   })
   export class DndDirective {

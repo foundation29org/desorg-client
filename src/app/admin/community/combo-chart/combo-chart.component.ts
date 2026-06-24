@@ -4,26 +4,22 @@ import {
     ViewEncapsulation,
     Output,
     EventEmitter,
-    ChangeDetectionStrategy,
     ViewChild,
     HostListener,
-    OnInit,
-    OnChanges,
     ContentChild,
     TemplateRef
   } from '@angular/core';
-  import { trigger, state, style, animate, transition } from '@angular/animations';
   
   import {
-    NgxChartsModule,
     BaseChartComponent,
-    LineComponent,
     LineSeriesComponent,
     calculateViewDimensions,
     ViewDimensions,
-    ColorHelper
+    ColorHelper,
+    ScaleType,
+    LegendPosition
   } from '@swimlane/ngx-charts';
-  import { area, line, curveLinear } from 'd3-shape';
+  import { curveLinear } from 'd3-shape';
   import { scaleBand, scaleLinear, scalePoint, scaleTime } from 'd3-scale';
   
   @Component({
@@ -142,13 +138,14 @@ import {
       </ngx-charts-chart>
     `,
     styleUrls: ['./combo-chart.component.scss'],
-    encapsulation: ViewEncapsulation.None
-  })
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
+})
   export class ComboChartComponent2 extends BaseChartComponent {
     @Input() curve: any = curveLinear;
     @Input() legend = false;
     @Input() legendTitle: string = 'Legend';
-    @Input() legendPosition: string = 'right';
+    @Input() legendPosition: LegendPosition = LegendPosition.Right;
     @Input() xAxis;
     @Input() yAxis;
     @Input() showXAxisLabel;
@@ -161,7 +158,7 @@ import {
     @Input() gradient: boolean;
     @Input() showGridLines: boolean = true;
     @Input() activeEntries: any[] = [];
-    @Input() schemeType: string;
+    @Input() schemeType: ScaleType = ScaleType.Ordinal;
     @Input() xAxisTickFormatting: any;
     @Input() yAxisTickFormatting: any;
     @Input() yRightAxisTickFormatting: any;
@@ -251,7 +248,6 @@ import {
       }
   
       this.yDomainLine = this.getYDomainLine();
-      console.log(this.yDomainLine);
       this.seriesDomain = this.getSeriesDomain();
   
       this.xScaleLine = this.getXScaleLine(this.xDomainLine, this.dims.width);
@@ -262,7 +258,6 @@ import {
   
       this.transform = `translate(75 , ${this.margin[0]})`;
       //this.transform = `translate(${this.dims.xOffset} , ${this.margin[0]})`;
-      console.log(this.transform);
     }
   
     deactivateAll() {
@@ -461,7 +456,7 @@ import {
     onClick(data) {
       this.select.emit(data);
     }
-  
+
     setColors(): void {
       let domain;
       if (this.schemeType === 'ordinal') {
@@ -469,8 +464,8 @@ import {
       } else {
         domain = this.yDomain;
       }
-      this.colors = new ColorHelper(this.scheme, this.schemeType, domain, this.customColors);
-      this.colorsLine = new ColorHelper(this.colorSchemeLine, this.schemeType, domain, this.customColors);
+      this.colors = new ColorHelper(this.scheme as any, this.schemeType as ScaleType, domain, this.customColors);
+      this.colorsLine = new ColorHelper(this.colorSchemeLine as any, this.schemeType as ScaleType, domain, this.customColors);
     }
   
     getLegendOptions() {

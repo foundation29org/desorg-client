@@ -10,6 +10,7 @@ import { v4 as uuidv4 } from 'uuid';
 declare let gtag: any;
 
 @Component({
+    standalone: false,
     selector: 'app-footer-land',
     templateUrl: './footer-land.component.html',
     styleUrls: ['./footer-land.component.scss']

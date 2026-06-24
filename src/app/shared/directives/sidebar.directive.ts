@@ -13,7 +13,8 @@ import { SidebarLinkDirective } from "./sidebarlink.directive";
 import { Router, NavigationEnd } from "@angular/router";
 import { filter } from "rxjs/operators";
 
-@Directive({ selector: "[appSidebar]" })
+@Directive({
+    standalone: false, selector: "[appSidebar]" })
 export class SidebarDirective implements OnInit, AfterViewInit {
   public navlinks: Array<SidebarLinkDirective> = [];
   activeLinks: string[] = [];

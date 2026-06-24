@@ -276,10 +276,10 @@
 						  </div>
 					  </mat-expansion-panel>
 					</mat-accordion>
-					<ngb-tabset type="pills" id="tabspills" #tabRef="ngbTabset" class="d-none col-xl-12 d-xl-block text-left">
-					  <ngb-tab id="tab0">
-						<ng-template ngbTabTitle><strong>Resumen</strong></ng-template>
-						<ng-template ngbTabContent>
+					<ul ngbNav #tabRef="ngbNav" id="tabspills" class="nav-pills d-none col-xl-12 d-xl-block text-left">
+					  <li ngbNavItem="tab0">
+						<a ngbNavLink><strong>Resumen</strong></a>
+						<ng-template ngbNavContent>
 						  <div class="p-3 m-3 border rounded" style="background-color: #A1CBEA !important;">
 							<!--<p class="ml-2 mr-2">{{actualPatient.resume.resource|json}}</p>-->
 							<p class="ml-2 mr-2 text-break">Patient: {{actualPatient.resume.resource.id}}</p>
@@ -305,10 +305,10 @@
 							</div>
 						  </div>
 						</ng-template>
-					  </ngb-tab>
-					  <ngb-tab id="tab1" *ngIf="actualPatient.seizures">
-						<ng-template ngbTabTitle><strong>{{'do.seizures' | translate }}</strong></ng-template>
-						<ng-template ngbTabContent>
+					  </li>
+					  <li ngbNavItem="tab1" *ngIf="actualPatient.seizures">
+						<a ngbNavLink><strong>{{'do.seizures' | translate }}</strong></a>
+						<ng-template ngbNavContent>
 						  <div class="col-md-12 mb-3 pb-2">
 							<div class="row">
 							  <div class="col-md-12 mt-2">
@@ -340,11 +340,11 @@
 							</div>
 						  </div>
 						</ng-template>
-					  </ngb-tab>
-					  <ngb-tab id="tab2" *ngIf="actualPatient.drugs">
-						<ng-template ngbTabTitle><strong>
-							{{'do.drugs' | translate }}</strong></ng-template>
-						<ng-template ngbTabContent>
+					  </li>
+					  <li ngbNavItem="tab2" *ngIf="actualPatient.drugs">
+						<a ngbNavLink><strong>
+							{{'do.drugs' | translate }}</strong></a>
+						<ng-template ngbNavContent>
 						  <div class="pb-2">
 							<div class="col-md-12">
 								<div class="card-body table-responsive">
@@ -371,11 +371,11 @@
 							</div>
 						  </div>
 						</ng-template>
-					  </ngb-tab>
-					  <ngb-tab id="tab3" *ngIf="actualPatient.feels">
-						<ng-template ngbTabTitle><strong>
-							{{'do.quality' | translate }}</strong></ng-template>
-						<ng-template ngbTabContent>
+					  </li>
+					  <li ngbNavItem="tab3" *ngIf="actualPatient.feels">
+						<a ngbNavLink><strong>
+							{{'do.quality' | translate }}</strong></a>
+						<ng-template ngbNavContent>
 						  <div class="pb-2">
 							<div class="col-md-12">
 								<div class="card-body table-responsive">
@@ -397,11 +397,11 @@
 							</div>
 						  </div>
 						</ng-template>
-					  </ngb-tab>
-					  <ngb-tab id="tab4" *ngIf="actualPatient.phenotypes">
-						<ng-template ngbTabTitle><strong>
-							{{'do.symptoms' | translate }}</strong></ng-template>
-						<ng-template ngbTabContent>
+					  </li>
+					  <li ngbNavItem="tab4" *ngIf="actualPatient.phenotypes">
+						<a ngbNavLink><strong>
+							{{'do.symptoms' | translate }}</strong></a>
+						<ng-template ngbNavContent>
 						  <div class="pb-2">
 							<div class="col-md-12">
 								<div class="card-body table-responsive">
@@ -432,11 +432,11 @@
 							</div>
 						  </div>
 						</ng-template>
-					  </ngb-tab>
-					  <ngb-tab id="tab5" *ngIf="actualPatient.questionnaires">
-						<ng-template ngbTabTitle><strong>
-							{{'do.questionnaires' | translate }}</strong></ng-template>
-						<ng-template ngbTabContent>
+					  </li>
+					  <li ngbNavItem="tab5" *ngIf="actualPatient.questionnaires">
+						<a ngbNavLink><strong>
+							{{'do.questionnaires' | translate }}</strong></a>
+						<ng-template ngbNavContent>
 						  <div class="pb-2">
 							<div class="col-md-12">
 								<div class="card-body table-responsive">
@@ -462,8 +462,9 @@
 							</div>
 						  </div>
 						</ng-template>
-					  </ngb-tab>
-					</ngb-tabset>
+					  </li>
+					</ul>
+					<div [ngbNavOutlet]="tabRef"></div>
 					<div class="mt-2" *ngIf="showButtonScroll">
 					  <button type="button" class="float-right btn btn-info round" (click)="goTopTabs()"><i class="ft-arrow-up fa-2x"></i></button>
 					</div>

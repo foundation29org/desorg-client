@@ -3,6 +3,7 @@ import { Router , ActivatedRoute} from "@angular/router";
 import {Location} from '@angular/common';
 
 @Component({
+    standalone: false,
     selector: 'app-error-page',
     templateUrl: './error-page.component.html',
     styleUrls: ['./error-page.component.scss']

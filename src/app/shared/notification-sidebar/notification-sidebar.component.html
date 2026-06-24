@@ -7,10 +7,10 @@
   <div class="side-nav notification-sidebar-content" [perfectScrollbar]>
     <div class="row">
       <div class="col-12 mt-1">
-        <ngb-tabset>
-          <ngb-tab>
-            <ng-template ngbTabTitle><b>Activity</b></ng-template>
-            <ng-template ngbTabContent>
+        <ul ngbNav #nav="ngbNav" class="nav-tabs">
+          <li ngbNavItem>
+            <a ngbNavLink><b>Activity</b></a>
+            <ng-template ngbNavContent>
               <div id="activity" class="col-12 timeline-left">
                 <h6 class="mt-1 mb-3 text-bold-400 text-left">RECENT ACTIVITY</h6>
                 <div id="timeline" class="timeline-left timeline-wrapper">
@@ -108,10 +108,10 @@
                 </div>
               </div>
             </ng-template>
-          </ngb-tab>
-          <ngb-tab>
-            <ng-template ngbTabTitle><b>Chat</b></ng-template>
-            <ng-template ngbTabContent>
+          </li>
+          <li ngbNavItem>
+            <a ngbNavLink><b>Chat</b></a>
+            <ng-template ngbNavContent>
               <div id="chatapp" class="col-12">
                 <h6 class="mt-1 mb-3 text-bold-400 text-left">RECENT CHAT</h6>
                 <div class="collection border-none">
@@ -300,10 +300,10 @@
                 </div>
               </div>
             </ng-template>
-          </ngb-tab>
-          <ngb-tab>
-            <ng-template ngbTabTitle><b>Settings</b></ng-template>
-            <ng-template ngbTabContent>
+          </li>
+          <li ngbNavItem>
+            <a ngbNavLink><b>Settings</b></a>
+            <ng-template ngbNavContent>
               <div id="settings" class="col-12">
                 <h6 class="mt-1 mb-3 text-bold-400 text-left">GENERAL SETTINGS</h6>
                 <ul class="list-unstyled">
@@ -397,8 +397,9 @@
                 </ul>
               </div>
             </ng-template>
-          </ngb-tab>
-        </ngb-tabset>
+          </li>
+        </ul>
+        <div [ngbNavOutlet]="nav"></div>
       </div>
     </div>
   </div>

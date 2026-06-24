@@ -9,6 +9,7 @@ import { sha512 } from "js-sha512";
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({
+    standalone: false,
     selector: 'app-permissions-page',
     templateUrl: './permissions-page.component.html',
     styleUrls: ['./permissions-page.component.scss']

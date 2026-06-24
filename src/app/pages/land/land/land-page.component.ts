@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EventsService } from 'app/shared/services/events.service';
 
 @Component({
+    standalone: false,
     selector: 'app-land-page',
     templateUrl: './land-page.component.html',
     styleUrls: ['./land-page.component.scss'],

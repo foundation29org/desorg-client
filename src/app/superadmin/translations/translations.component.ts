@@ -10,6 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({
+    standalone: false,
     selector: 'app-translations',
     templateUrl: './translations.component.html',
     styleUrls: ['./translations.component.scss'],

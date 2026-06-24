@@ -18,6 +18,7 @@ import { sha512 } from "js-sha512";
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({
+    standalone: false,
     selector: 'app-user-profile-page',
     templateUrl: './user-profile-page.component.html',
     styleUrls: ['./user-profile-page.component.scss'],

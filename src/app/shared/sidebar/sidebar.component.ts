@@ -16,6 +16,7 @@ import { ApiDx29ServerService } from 'app/shared/services/api-dx29-server.servic
 import Swal from 'sweetalert2';
 
 @Component({
+    standalone: false,
   selector: "app-sidebar",
   templateUrl: "./sidebar.component.html",
   animations: customAnimations,

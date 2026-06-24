@@ -8,6 +8,7 @@ import * as chartsData from 'app/shared/configs/general-charts.config';
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({
+    standalone: false,
     selector: 'app-symptoms',
     templateUrl: './symptoms.component.html',
     styleUrls: ['./symptoms.component.scss'],

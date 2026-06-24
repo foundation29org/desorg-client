@@ -3,11 +3,12 @@ import { TranslateService } from '@ngx-translate/core';
 import { RaitoService } from 'app/shared/services/raito.service';
 import { SearchService } from 'app/shared/services/search.service';
 import { SortService } from 'app/shared/services/sort.service';
-import { ColorHelper } from '@swimlane/ngx-charts';
+import { ColorHelper, ScaleType } from '@swimlane/ngx-charts';
 import * as chartsData from 'app/shared/configs/general-charts.config';
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({
+    standalone: false,
     selector: 'app-seizures',
     templateUrl: './seizures.component.html',
     styleUrls: ['./seizures.component.scss'],
@@ -245,7 +246,7 @@ export class SeizuresComponent implements OnInit, OnDestroy{
       this.lineChart[0].series.sort(this.sortService.DateSortInver("name"));
     }
     this.chartNames = this.lineChart.map((d: any) => d.name);
-    this.colors = new ColorHelper(this.lineChartColorScheme, 'ordinal', this.chartNames, this.lineChartColorScheme);
+    this.colors = new ColorHelper(this.lineChartColorScheme as any, ScaleType.Ordinal, this.chartNames, this.lineChartColorScheme);
     var actualDate1=new Date();
     var pastDate1=new Date(actualDate1);
     pastDate1.setDate(pastDate1.getDate() - Math.round((period+1)/2));

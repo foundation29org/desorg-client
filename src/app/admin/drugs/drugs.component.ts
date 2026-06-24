@@ -7,6 +7,7 @@ import * as chartsData from 'app/shared/configs/general-charts.config';
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({
+    standalone: false,
     selector: 'app-drugs',
     templateUrl: './drugs.component.html',
     styleUrls: ['./drugs.component.scss'],

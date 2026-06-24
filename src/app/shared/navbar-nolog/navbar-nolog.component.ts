@@ -7,6 +7,7 @@ import { Injectable, Injector } from '@angular/core';
 
 
 @Component({
+    standalone: false,
     selector: 'app-navbar-nolog',
     templateUrl: './navbar-nolog.component.html',
     styleUrls: ['./navbar-nolog.component.scss'],

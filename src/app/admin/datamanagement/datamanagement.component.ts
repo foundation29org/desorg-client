@@ -7,6 +7,7 @@ import { json2csv } from 'json-2-csv';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
+    standalone: false,
     selector: 'app-datamanagement',
     templateUrl: './datamanagement.component.html',
     styleUrls: ['./datamanagement.component.scss'],

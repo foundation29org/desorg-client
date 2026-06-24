@@ -51,6 +51,5 @@ import { MyFilterPipe } from 'app/shared/services/my-filter.pipe';
         PasswordValidator,
         MyFilterPipe
     ],
-    entryComponents:[TermsConditionsPageComponent, DataProcessingAgreementComponent]
 })
 export class ContentPagesModule { }

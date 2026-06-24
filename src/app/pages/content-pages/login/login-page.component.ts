@@ -25,6 +25,7 @@ const options = {
 };
 
 @Component({
+    standalone: false,
     selector: 'app-login-page',
     templateUrl: './login-page.component.html',
     styleUrls: ['./login-page.component.scss'],

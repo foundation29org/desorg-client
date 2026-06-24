@@ -13,6 +13,7 @@ import { GoogleAnalyticsService } from 'app/shared/services/google-analytics.ser
 declare let gtag: any;
 
 @Component({
+    standalone: false,
     selector: 'app-about-us-page',
     templateUrl: './about-us-page.component.html',
     styleUrls: ['./about-us-page.component.scss'],

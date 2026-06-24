@@ -27,6 +27,7 @@ export function getCulture() {
 }
 
 @Component({
+    standalone: false,
   selector: 'app-register-page',
   templateUrl: './register-page.component.html',
   styleUrls: ['./register-page.component.scss'],

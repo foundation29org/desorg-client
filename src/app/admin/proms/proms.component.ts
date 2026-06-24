@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs/Subscription';
 import Swal from 'sweetalert2';
 
 @Component({
+    standalone: false,
     selector: 'app-proms',
     templateUrl: './proms.component.html',
     styleUrls: ['./proms.component.scss'],
