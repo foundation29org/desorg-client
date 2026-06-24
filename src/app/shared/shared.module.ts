@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { CustomFormsModule } from 'ngx-custom-validators';
 import { RouterModule } from '@angular/router';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -45,7 +44,6 @@ import { SidebarToggleDirective } from './directives/sidebartoggle.directive';
   ],
   imports: [
     FormsModule,
-    CustomFormsModule,
     RouterModule,
     CommonModule,
     NgbModule,

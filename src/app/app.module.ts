@@ -13,7 +13,6 @@ import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withInterceptorsFromD
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { Angulartics2Module } from 'angulartics2';
-import { NgxHotjarModule } from 'ngx-hotjar';
 import { QRCodeComponent } from 'angularx-qrcode';
 
 import { AppComponent } from './app.component';
@@ -36,7 +35,6 @@ import { SearchService } from 'app/shared/services/search.service';
 import { EventsService } from 'app/shared/services/events.service';
 import { DialogService } from 'app/shared/services/dialog.service';
 import { Data } from 'app/shared/services/data.service';
-import { environment } from 'environments/environment';
 import { GoogleAnalyticsService } from './shared/services/google-analytics.service';
 
 export function createTranslateLoader(http: HttpClient) {
@@ -69,7 +67,6 @@ export function createTranslateLoader(http: HttpClient) {
       }
     }),
     Angulartics2Module.forRoot(),
-    NgxHotjarModule.forRoot(environment.hotjarSiteId),
     QRCodeComponent
   ],
   providers: [

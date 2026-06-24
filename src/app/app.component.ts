@@ -14,7 +14,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { LangService } from 'app/shared/services/lang.service';
 import Swal from 'sweetalert2';
 import { EventsService } from 'app/shared/services/events.service';
-import { NgxHotjarService } from 'ngx-hotjar';
+import { HotjarStubService } from 'app/shared/services/hotjar-stub.service';
 
 @Component({
   standalone: false,
@@ -34,7 +34,7 @@ export class AppComponent implements OnInit, OnDestroy {
   tituloEvent: string = '';
   role: string = '';
   //Set toastr container ref configuration for toastr positioning on screen
-  constructor(private http: HttpClient, public toastr: ToastrService, private router: Router, private activatedRoute: ActivatedRoute, private titleService: Title, public translate: TranslateService, private langService: LangService, private eventsService: EventsService, protected $hotjar: NgxHotjarService, private meta: Meta) {
+  constructor(private http: HttpClient, public toastr: ToastrService, private router: Router, private activatedRoute: ActivatedRoute, private titleService: Title, public translate: TranslateService, private langService: LangService, private eventsService: EventsService, protected $hotjar: HotjarStubService, private meta: Meta) {
 
     if (sessionStorage.getItem('lang')) {
       this.translate.use(sessionStorage.getItem('lang'));
