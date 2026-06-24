@@ -5,8 +5,16 @@ import { HttpClient } from "@angular/common/http";
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/map';
-import * as decode from 'jwt-decode';
+import decode from 'jwt-decode';
 import { ICurrentPatient } from './ICurrentPatient.interface';
+
+interface JwtPayload {
+  sub: string;
+  exp: number;
+  role: string;
+  subrole: string;
+  group?: string;
+}
 
 @Injectable()
 export class AuthService {
@@ -39,7 +47,7 @@ export class AuthService {
         sessionStorage.setItem('culture', 'en-EN');
       }
       this.setAuthenticated(sessionStorage.getItem('token'));
-      const tokenPayload = decode(sessionStorage.getItem('token'));
+      const tokenPayload = decode<JwtPayload>(sessionStorage.getItem('token'));
       this.setIdUser(tokenPayload.sub);
       this.setExpToken(tokenPayload.exp);
       this.setRole(tokenPayload.role);
@@ -78,7 +86,7 @@ export class AuthService {
   setEnvironment(token:string):void{
     this.setAuthenticated(token);
     // decode the token to get its payload
-    const tokenPayload = decode(token);
+    const tokenPayload = decode<JwtPayload>(token);
     this.setIdUser(tokenPayload.sub);
     this.setExpToken(tokenPayload.exp);
     this.setRole(tokenPayload.role);

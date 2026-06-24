@@ -5,7 +5,6 @@ import { TokenService } from './token.service';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
 import Swal from 'sweetalert2';
-import * as decode from 'jwt-decode';
 
 @Injectable()
 export class AuthGuard implements CanActivate {

@@ -5,8 +5,12 @@ import { HttpClient } from "@angular/common/http";
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/map';
-import * as decode from 'jwt-decode';
+import decode from 'jwt-decode';
 import { AuthService } from './auth.service';
+
+interface JwtPayload {
+  sub: string;
+}
 
 @Injectable()
 export class TokenService {
@@ -31,7 +35,7 @@ export class TokenService {
   isTokenValid():boolean{
     if(sessionStorage.getItem('token') && this.authService.getIdUser()!=undefined){
       if((this.authService.getToken() == sessionStorage.getItem('token'))&& this.authService.getIdUser()!=undefined){
-        const tokenPayload = decode(sessionStorage.getItem('token'));
+        const tokenPayload = decode<JwtPayload>(sessionStorage.getItem('token'));
         if(tokenPayload.sub ==this.authService.getIdUser()){
           return true;
         }else{

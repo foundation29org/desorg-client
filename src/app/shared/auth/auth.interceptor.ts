@@ -11,7 +11,6 @@ import { environment } from 'environments/environment';
 
 import { EventsService } from 'app/shared/services/events.service';
 import { takeUntil } from 'rxjs/operators';
-import * as decode from 'jwt-decode';
 
 
 @Injectable()
