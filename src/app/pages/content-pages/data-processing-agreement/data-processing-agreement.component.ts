@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
+    standalone: false,
     selector: 'app-data-processing-agreement',
     templateUrl: './data-processing-agreement.component.html',
     styleUrls: ['./data-processing-agreement.component.scss']

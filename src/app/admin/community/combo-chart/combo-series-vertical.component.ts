@@ -8,7 +8,6 @@ import {
    } from '@angular/core';
   import {
     trigger,
-    state,
     style,
     animate,
     transition
@@ -45,17 +44,18 @@ import {
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
     animations: [
-      trigger('animationState', [
-        transition('* => void', [
-          style({
-            opacity: 1,
-            transform: '*',
-          }),
-          animate(500, style({opacity: 0, transform: 'scale(0)'}))
+        trigger('animationState', [
+            transition('* => void', [
+                style({
+                    opacity: 1,
+                    transform: '*',
+                }),
+                animate(500, style({ opacity: 0, transform: 'scale(0)' }))
+            ])
         ])
-      ])
-    ]
-  })
+    ],
+    standalone: false
+})
   export class ComboSeriesVerticalComponent2 implements OnChanges {
   
     @Input() dims;
@@ -176,7 +176,6 @@ import {
         
         this.getSeriesTooltips(this.seriesLine, index);
         const lineValue = this.seriesLine[0].series[index].value;
-        const lineName = this.seriesLine[0].series[index].name;
         bar.tooltipText = `
           <span class="tooltip-label">${tooltipLabel }</span>
           <span class="tooltip-val"> Y1 - ${value.toLocaleString()} • Y2 - ${lineValue.toLocaleString()}%</span>

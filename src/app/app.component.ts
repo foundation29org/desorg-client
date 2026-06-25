@@ -1,24 +1,20 @@
+import { filter, mergeMap, map } from 'rxjs/operators';
 import { Component, ViewContainerRef, OnInit, OnDestroy } from '@angular/core';
 import { environment } from 'environments/environment';
 import { HttpClient } from "@angular/common/http";
 import { ToastrService } from 'ngx-toastr';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/mergeMap'
-import { Subscription } from 'rxjs/Subscription';
+import { Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Router, NavigationEnd, ActivatedRoute, NavigationStart, NavigationCancel } from '@angular/router';
 import { Title, Meta } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { LangService } from 'app/shared/services/lang.service';
 import Swal from 'sweetalert2';
 import { EventsService } from 'app/shared/services/events.service';
-import { NgxHotjarService } from 'ngx-hotjar';
-
-import { Angulartics2GoogleAnalytics } from 'angulartics2/ga';
+import { HotjarStubService } from 'app/shared/services/hotjar-stub.service';
 
 @Component({
+  standalone: false,
   selector: 'app-root',
   templateUrl: './app.component.html',
   providers: [LangService]
@@ -35,7 +31,7 @@ export class AppComponent implements OnInit, OnDestroy {
   tituloEvent: string = '';
   role: string = '';
   //Set toastr container ref configuration for toastr positioning on screen
-  constructor(private http: HttpClient, public toastr: ToastrService, private router: Router, private activatedRoute: ActivatedRoute, private titleService: Title, public translate: TranslateService, angulartics2GoogleAnalytics: Angulartics2GoogleAnalytics, private langService: LangService, private eventsService: EventsService, protected $hotjar: NgxHotjarService, private meta: Meta) {
+  constructor(private http: HttpClient, public toastr: ToastrService, private router: Router, private activatedRoute: ActivatedRoute, private titleService: Title, public translate: TranslateService, private langService: LangService, private eventsService: EventsService, protected $hotjar: HotjarStubService, private meta: Meta) {
 
     if (sessionStorage.getItem('lang')) {
       this.translate.use(sessionStorage.getItem('lang'));
@@ -180,16 +176,16 @@ export class AppComponent implements OnInit, OnDestroy {
       }
     })
 
-    this.subscription = this.router.events
-      .filter((event) => event instanceof NavigationEnd)
-      .map(() => this.activatedRoute)
-      .map((route) => {
+    this.subscription = this.router.events.pipe(
+      filter((event) => event instanceof NavigationEnd),
+      map(() => this.activatedRoute),
+      map((route) => {
         while (route.firstChild) route = route.firstChild;
         return route;
-      })
-      .filter((route) => route.outlet === 'primary')
-      .mergeMap((route) => route.data)
-      .subscribe((event) => {
+      }),
+      filter((route) => route.outlet === 'primary'),
+      mergeMap((route) => route.data)
+    ).subscribe((event) => {
         (async () => {
           await this.delay(500);
           this.tituloEvent = event['title'];

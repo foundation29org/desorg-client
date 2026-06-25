@@ -1,39 +1,34 @@
 import { Injectable } from '@angular/core';
-import * as Rx from 'rxjs/Rx';
+import { Subject } from 'rxjs';
 
 @Injectable()
 export class EventsService {
   listeners: any;
-  eventsSubject: any;
+  eventsSubject: Subject<{ name: string; msg: any }>;
   events: any;
-    constructor() {
-        this.listeners = {};
-        this.eventsSubject = new Rx.Subject();
 
-        this.events = Rx.Observable.from(this.eventsSubject);
+  constructor() {
+    this.listeners = {};
+    this.eventsSubject = new Subject<{ name: string; msg: any }>();
+    this.events = this.eventsSubject.asObservable();
 
-        this.events.subscribe(
-            ({name, msg}) => {
-                if (this.listeners[name]) {
-                    for (let listener of this.listeners[name]) {
-                        listener(msg);
-                    }
-                }
-            });
-    }
-
-    on(name, listener) {
-        if (!this.listeners[name]) {
-            this.listeners[name] = [];
+    this.events.subscribe(({ name, msg }) => {
+      if (this.listeners[name]) {
+        for (const listener of this.listeners[name]) {
+          listener(msg);
         }
+      }
+    });
+  }
 
-        this.listeners[name].push(listener);
+  on(name: string, listener: (...args: any[]) => void) {
+    if (!this.listeners[name]) {
+      this.listeners[name] = [];
     }
+    this.listeners[name].push(listener);
+  }
 
-    broadcast(name, msg) {
-        this.eventsSubject.next({
-            name,
-            msg
-        });
-    }
+  broadcast(name: string, msg: any) {
+    this.eventsSubject.next({ name, msg });
+  }
 }

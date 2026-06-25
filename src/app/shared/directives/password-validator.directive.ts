@@ -2,6 +2,7 @@ import { Directive, forwardRef, Attribute} from "@angular/core";
 import { Validator, AbstractControl, NG_VALIDATORS} from "@angular/forms";
 
 @Directive({
+    standalone: false,
   selector: '[validatePassword]',
   providers: [
     { provide: NG_VALIDATORS, useExisting: forwardRef(() => PasswordValidator), multi: true}

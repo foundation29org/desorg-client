@@ -1,0 +1,45 @@
+@use '@angular/material' as mat;
+@use './theme-colors' as raito-network;
+
+$raito-network-theme: mat.define-theme((
+  color: (
+    theme-type: light,
+    primary: raito-network.$primary-palette,
+    tertiary: raito-network.$tertiary-palette,
+  ),
+  typography: (
+    plain-family: Roboto,
+    brand-family: Roboto,
+    bold-weight: 700,
+    medium-weight: 500,
+    regular-weight: 400,
+  ),
+  density: (scale: 0),
+));
+
+html {
+  color-scheme: light;
+
+  @include mat.theme((
+    color: (
+      theme-type: light,
+      primary: raito-network.$primary-palette,
+      tertiary: raito-network.$tertiary-palette,
+    ),
+    typography: Roboto,
+    density: 0,
+  ));
+
+  @include mat.color-variants-backwards-compatibility($raito-network-theme);
+}
+
+@include mat.datepicker-overrides((
+  calendar-container-background-color: #ffffff,
+  calendar-container-text-color: rgba(0, 0, 0, 0.87),
+  calendar-date-selected-state-background-color: #333333,
+  calendar-date-selected-state-text-color: #ffffff,
+  calendar-date-today-outline-color: rgba(0, 0, 0, 0.38),
+  calendar-date-today-selected-state-outline-color: #ffffff,
+  calendar-period-button-text-color: rgba(0, 0, 0, 0.87),
+  calendar-period-button-icon-color: rgba(0, 0, 0, 0.87),
+));

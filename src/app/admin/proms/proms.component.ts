@@ -5,10 +5,11 @@ import { RaitoService } from 'app/shared/services/raito.service';
 import { SearchService } from 'app/shared/services/search.service';
 import { AuthService } from '../../../app/shared/auth/auth.service';
 import { NgbModal, NgbModalRef, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
 
 @Component({
+    standalone: false,
     selector: 'app-proms',
     templateUrl: './proms.component.html',
     styleUrls: ['./proms.component.scss'],

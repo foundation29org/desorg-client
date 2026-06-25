@@ -7,9 +7,10 @@ import { AuthService } from 'app/shared/auth/auth.service';
 import { AuthGuard } from 'app/shared/auth/auth-guard.service';
 import { LangService } from 'app/shared/services/lang.service';
 import Swal from 'sweetalert2';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 @Component({
+    standalone: false,
     selector: 'app-langs',
     templateUrl: './langs.component.html',
     styleUrls: ['./langs.component.scss'],
@@ -132,7 +133,7 @@ export class LangsComponent implements OnDestroy{
 
           this.loadLanguages();
 
-        }else if("already exists"){
+        }else if(res.message=="already exists"){
           Swal.fire(this.translate.instant("generics.Warning"), this.translate.instant("lang.The language already exists"), "error");
         }
 

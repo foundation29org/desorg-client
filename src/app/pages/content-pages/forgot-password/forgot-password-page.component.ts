@@ -5,9 +5,10 @@ import { environment } from 'environments/environment';
 import { HttpClient } from "@angular/common/http";
 import { TranslateService } from '@ngx-translate/core';
 import Swal from 'sweetalert2';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 @Component({
+    standalone: false,
     selector: 'app-forgot-password-page',
     templateUrl: './forgot-password-page.component.html',
     styleUrls: ['./forgot-password-page.component.scss']
