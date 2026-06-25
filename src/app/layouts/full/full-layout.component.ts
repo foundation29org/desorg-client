@@ -1,10 +1,10 @@
 import { filter } from 'rxjs/operators';
-import { Component, OnInit, OnDestroy, ElementRef, Inject, Renderer2, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, Inject, Renderer2, AfterViewInit, ViewChild, DOCUMENT } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfigService } from 'app/shared/services/config.service';
 import { AuthService } from 'app/shared/auth/auth.service';
 import { Router, NavigationEnd } from '@angular/router';
-import { DOCUMENT } from '@angular/common';
+
 import { EventsService} from 'app/shared/services/events.service';
 import { Injectable, Injector } from '@angular/core';
 import { Data } from 'app/shared/services/data.service';

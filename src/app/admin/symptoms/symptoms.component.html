@@ -1,69 +1,74 @@
 <div class="row">
-    <div  class="col-md-12 center-elements mt-3" *ngIf="!loadedData">
-        <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+  @if (!loadedData) {
+    <div  class="col-md-12 center-elements mt-3">
+      <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+    </div>
+  }
+  @if (loadedData && data.length>0) {
+    <div class="col-lg-12 col-12 mt-3" #ContainerRef1>
+      Total Patients: {{totalPatients}}
+      <p class="mb-0 mt-3">
+        <mat-checkbox [(ngModel)]="allSelected" (change)="allChanged()">Select/Deselect All</mat-checkbox>
+      </p>
+      <mat-select class="form-control" id="choiseset" name="choiseset" multiple [(ngModel)]="countriesSelected" (selectionChange)="countriesChanged()">
+        @for (country of countries; track country) {
+          <mat-option value="{{country.name}}">{{country.name}} ({{country.value}} patients)</mat-option>
+        }
+      </mat-select>
+      <!--<div class="height-200 mt-3">
+      <p *ngFor="let element of lineChart ; let i = index">
+        {{element.name}}: {{element.value}}
+      </p>
+    </div>-->
+    <div class="mt-3 row">
+      <ngx-charts-bar-horizontal
+        [view]="[(ContainerRef1.offsetWidth-90), 400]"
+        [scheme]="lineChartColorScheme"
+        [results]="lineChart"
+        [xAxis]="true" [yAxis]="true"
+        [legend]="false" [legendPosition]="'below'" [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="barChartXAxisLabel"
+        [yAxisLabel]="barChartYAxisLabel">
+      </ngx-charts-bar-horizontal>
+    </div>
+    <!--
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">{{'do.symptoms' | translate }}</h4>
       </div>
-	<div class="col-lg-12 col-12 mt-3" #ContainerRef1 *ngIf="loadedData && data.length>0">
-		Total Patients: {{totalPatients}}
-		<p class="mb-0 mt-3">
-			<mat-checkbox [(ngModel)]="allSelected" (change)="allChanged()">Select/Deselect All</mat-checkbox>
-		</p>
-		<mat-select class="form-control" id="choiseset" name="choiseset" multiple [(ngModel)]="countriesSelected" (selectionChange)="countriesChanged()">
-			<mat-option *ngFor="let country of countries" value="{{country.name}}">{{country.name}} ({{country.value}} patients)</mat-option>
-		</mat-select>
-
-		<!--<div class="height-200 mt-3">
-			<p *ngFor="let element of lineChart ; let i = index">
-				{{element.name}}: {{element.value}}
-			</p>
-		</div>-->
-		<div class="mt-3 row">
-			<ngx-charts-bar-horizontal
-			[view]="[(ContainerRef1.offsetWidth-90), 400]"                                    
-					[scheme]="lineChartColorScheme"
-					[results]="lineChart"
-					[xAxis]="true" [yAxis]="true"
-					[legend]="false" [legendPosition]="'below'" [showXAxisLabel]="showXAxisLabel"
-					[showYAxisLabel]="showYAxisLabel" [xAxisLabel]="barChartXAxisLabel"
-					[yAxisLabel]="barChartYAxisLabel">
-				</ngx-charts-bar-horizontal> 
-		</div>
-		
-
-		<!--
-		<div class="card">
-			<div class="card-header">
-				<h4 class="card-title">{{'do.symptoms' | translate }}</h4>
-			</div>
-			<div class="card-body table-responsive">
-				<table class="table text-center">
-					<thead>
-						<tr>
-							<th>Name</th>
-							<th>Value</th>
-							<th>Date</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr *ngFor="let element of data ; let i = index">
-							<td>{{element.resource.name}}</td>
-							<td>
-								<span>
-									<a
-									href="https://hpo.jax.org/app/browse/term/{{element.resource.valueString}}" target="_blank"
-									title=" {{element.resource.name}} ({{element.resource.valueString}}):">{{element.resource.valueString}} 
-									<i class="ft-external-link"></i></a>
-								</span>
-							</td>
-							<td>{{element.resource.effectiveDateTime |date}}</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>-->
-	</div>
-	<div class="col-lg-12 col-12" *ngIf="loadedData && data.length==0">
-		<p class="mt-3">
-			{{'generics.No data' | translate }}
-		</p>
-	</div>
+      <div class="card-body table-responsive">
+        <table class="table text-center">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Value</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let element of data ; let i = index">
+              <td>{{element.resource.name}}</td>
+              <td>
+                <span>
+                  <a
+                    href="https://hpo.jax.org/app/browse/term/{{element.resource.valueString}}" target="_blank"
+                    title=" {{element.resource.name}} ({{element.resource.valueString}}):">{{element.resource.valueString}}
+                    <i class="ft-external-link"></i></a>
+                  </span>
+                </td>
+                <td>{{element.resource.effectiveDateTime |date}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>-->
+    </div>
+  }
+  @if (loadedData && data.length==0) {
+    <div class="col-lg-12 col-12">
+      <p class="mt-3">
+        {{'generics.No data' | translate }}
+      </p>
+    </div>
+  }
 </div>
