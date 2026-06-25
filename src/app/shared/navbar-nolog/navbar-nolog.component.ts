@@ -1,7 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { LangService } from 'app/shared/services/lang.service';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { EventsService} from 'app/shared/services/events.service';
 import { Injectable, Injector } from '@angular/core';
 

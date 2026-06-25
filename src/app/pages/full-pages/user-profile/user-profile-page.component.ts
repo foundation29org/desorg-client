@@ -15,7 +15,7 @@ import Swal from 'sweetalert2';
 import { EventsService} from 'app/shared/services/events.service';
 import { Injectable, Injector } from '@angular/core';
 import { sha512 } from "js-sha512";
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 @Component({
     standalone: false,

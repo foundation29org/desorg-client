@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { RaitoService } from 'app/shared/services/raito.service';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { DateService } from 'app/shared/services/date.service';
 import { json2csv } from 'json-2-csv';
 import { ToastrService } from 'ngx-toastr';

@@ -4,9 +4,7 @@ import { RaitoService } from 'app/shared/services/raito.service';
 import { DateService } from 'app/shared/services/date.service';
 import { Apif29BioService } from 'app/shared/services/api-f29bio.service';
 import { NgbModal, NgbModalRef, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
-import {Observable, of, OperatorFunction} from 'rxjs';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/toPromise';
+import {Observable, of, fromEvent, OperatorFunction} from 'rxjs';
 import { DateAdapter } from '@angular/material/core';
 import { SortService } from 'app/shared/services/sort.service';
 import { SearchService } from 'app/shared/services/search.service';
@@ -15,7 +13,7 @@ import { ColorHelper, ScaleType } from '@swimlane/ngx-charts';
 import Swal from 'sweetalert2';
 import { jsPDFService } from 'app/shared/services/jsPDF.service'
 import { ApiDx29ServerService } from 'app/shared/services/api-dx29-server.service';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 declare let html2canvas: any;
 
 @Component({
@@ -229,7 +227,7 @@ meses: any =
       }
     ));
 
-    this.eventSubscription = Observable.fromEvent(window, "scroll").subscribe(e => {
+    this.eventSubscription = fromEvent(window, "scroll").subscribe(e => {
       if($('#tabspills')){
           console.log($('#tabspills').height())
           if($('#tabspills').height()>720){

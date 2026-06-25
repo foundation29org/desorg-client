@@ -1,13 +1,10 @@
+import { filter, mergeMap, map } from 'rxjs/operators';
 import { Component, ViewContainerRef, OnInit, OnDestroy } from '@angular/core';
 import { environment } from 'environments/environment';
 import { HttpClient } from "@angular/common/http";
 import { ToastrService } from 'ngx-toastr';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/mergeMap'
-import { Subscription } from 'rxjs/Subscription';
+import { Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Router, NavigationEnd, ActivatedRoute, NavigationStart, NavigationCancel } from '@angular/router';
 import { Title, Meta } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
@@ -179,16 +176,16 @@ export class AppComponent implements OnInit, OnDestroy {
       }
     })
 
-    this.subscription = this.router.events
-      .filter((event) => event instanceof NavigationEnd)
-      .map(() => this.activatedRoute)
-      .map((route) => {
+    this.subscription = this.router.events.pipe(
+      filter((event) => event instanceof NavigationEnd),
+      map(() => this.activatedRoute),
+      map((route) => {
         while (route.firstChild) route = route.firstChild;
         return route;
-      })
-      .filter((route) => route.outlet === 'primary')
-      .mergeMap((route) => route.data)
-      .subscribe((event) => {
+      }),
+      filter((route) => route.outlet === 'primary'),
+      mergeMap((route) => route.data)
+    ).subscribe((event) => {
         (async () => {
           await this.delay(500);
           this.tituloEvent = event['title'];

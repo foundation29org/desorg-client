@@ -6,14 +6,14 @@ import { HttpClient } from "@angular/common/http";
 import { sha512 } from "js-sha512";
 import { AuthService } from '../../../../app/shared/auth/auth.service';
 import { AuthGuard } from '../../../../app/shared/auth/auth-guard.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { PatientService } from '../../../../app/shared/services/patient.service';
 import { EventsService} from 'app/shared/services/events.service';
 import { Injectable, Injector } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 const options = {
   clientID: 'com.company.app', // Apple Client ID

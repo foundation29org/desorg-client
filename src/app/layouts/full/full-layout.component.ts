@@ -1,3 +1,4 @@
+import { filter } from 'rxjs/operators';
 import { Component, OnInit, OnDestroy, ElementRef, Inject, Renderer2, AfterViewInit, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfigService } from 'app/shared/services/config.service';
@@ -56,7 +57,7 @@ export class FullLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
           this.isApp = this.document.URL.indexOf( 'http://' ) === -1 && this.document.URL.indexOf( 'https://' ) === -1 && location.hostname != "localhost" && location.hostname != "127.0.0.1";
           this.role = this.authService.getRole();
 
-          this.router.events.filter((event: any) => event instanceof NavigationEnd).subscribe(
+          this.router.events.pipe(filter((event: any) => event instanceof NavigationEnd)).subscribe(
             event => {
               var tempUrl= (event.url).toString().split('?');
               var tempUrl1 = (tempUrl[0]).toString();

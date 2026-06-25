@@ -1,3 +1,4 @@
+import { filter } from 'rxjs/operators';
 import { Component, Output, EventEmitter, OnDestroy, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
@@ -12,7 +13,7 @@ import { Data } from 'app/shared/services/data.service';
 import Swal from 'sweetalert2';
 import { ApiDx29ServerService } from 'app/shared/services/api-dx29-server.service';
 import { SearchService } from 'app/shared/services/search.service';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 import { LayoutService } from '../services/layout.service';
 import { ConfigService } from '../services/config.service';
@@ -81,7 +82,7 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
     this.role = this.authService.getRole();
     this.redirectUrl = this.authService.getRedirectUrl();
 
-    this.router.events.filter((event: any) => event instanceof NavigationEnd).subscribe(
+    this.router.events.pipe(filter((event: any) => event instanceof NavigationEnd)).subscribe(
       event => {
         var tempUrl = (event.url).toString().split('?');
         this.actualUrl = tempUrl[0];
