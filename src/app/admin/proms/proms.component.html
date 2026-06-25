@@ -1,402 +1,474 @@
 <div class="row">
-    <div class="col-md-12 center-elements mt-3" *ngIf="!loadedData">
-        <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+  @if (!loadedData) {
+    <div class="col-md-12 center-elements mt-3">
+      <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+    </div>
+  }
+  @if (loadedData) {
+    <div class="col-lg-12 col-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">{{'do.questionnaires' | translate }}
+            <span class="text-muted float-end">
+              <span class="btn btn-outline-primary me-1" style="text-transform: initial;" (click)="addForm(contentModalForm)">New</span>
+              <span class="btn btn-outline-primary ms-1" style="text-transform: initial;" (click)="searchForm(contentModalSearch)">Search</span>
+            </span>
+            <span class="d-block mt-3 mb-3">
+              @for (questionnaire of questionnaires ; track questionnaire; let i = $index) {
+                <p class="text-muted mb-2">
+                  <span class="d-block" style="text-transform: none;">
+                    <span class="mt-2">{{questionnaire.title}} </span>
+                    <span class="mt-1 nav-item" ngbDropdown display="dynamic" placement="right">
+                      <a class="position-relative colorlink" style="padding: 0rem 1rem;" id="dropdownPat{{i}}"
+                        ngbDropdownToggle title="{{'generics.Options' | translate }}">
+                        <i class="mt-1 fas fa-ellipsis-v secondary"></i>
+                      </a>
+                      <span ngbDropdownMenu aria-labelledby="dropdownPat{{i}}" class="dropdown">
+                        <a class="dropdown-item py-1" href="javascript:;" (click)="seeResults(questionnaire)">
+                          <span class="fa fa-eye primary pointer me-1" style="width:20px"></span><span class="">{{'generics.View' | translate }}</span>
+                        </a>
+                        @if (questionnaire.createdById==actuaGroup) {
+                          <a class="dropdown-item py-1" href="javascript:;" (click)="editForm(questionnaire, contentModalForm)">
+                            <span class="fa fa-edit primary pointer me-1" style="width:20px"></span><span class="">{{'generics.Edit' | translate }}</span>
+                          </a>
+                        }
+                        <a class="dropdown-item py-1" href="javascript:;" (click)="deleteForm(questionnaire)">
+                          <span class="fa fa-trash primary pointer me-1" style="width:20px"></span><span class="">{{'generics.Delete' | translate }}</span>
+                        </a>
+                      </span>
+                    </span>
+                    <!--<span class="fa fa-eye primary pointer me-1 ms-1" (click)="seeResults(questionnaire)"></span>
+                    <span *ngIf="questionnaire.createdById==actuaGroup"  class="fa fa-edit primary pointer me-1" (click)="editForm(questionnaire, contentModalForm)"></span>
+                    <span class="fa fa-trash primary pointer" (click)="deleteForm(questionnaire)"></span>-->
+                  </span>
+                  <!--<span *ngIf="questionnaires.length>0 && (i>0) && (i<=questionnaires.length-1)">,</span>-->
+                </p>
+              }
+            </span>
+          </h4>
+        </div>
       </div>
-	<div class="col-lg-12 col-12" *ngIf="loadedData">
-		<div class="card">
-			<div class="card-header">
-				<h4 class="card-title">{{'do.questionnaires' | translate }}
-					<span class="text-muted float-end">
-						<span class="btn btn-outline-primary me-1" style="text-transform: initial;" (click)="addForm(contentModalForm)">New</span>
-						<span class="btn btn-outline-primary ms-1" style="text-transform: initial;" (click)="searchForm(contentModalSearch)">Search</span>
-					</span>
-					<span class="d-block mt-3 mb-3">
-						<p *ngFor="let questionnaire of questionnaires ; let i = index" class="text-muted mb-2">
-							<span class="d-block" style="text-transform: none;">
-								<span class="mt-2">{{questionnaire.title}} </span>
-								<span class="mt-1 nav-item" ngbDropdown display="dynamic" placement="right">
-									<a class="position-relative colorlink" style="padding: 0rem 1rem;" id="dropdownPat{{i}}"
-										ngbDropdownToggle title="{{'generics.Options' | translate }}">
-										<i class="mt-1 fas fa-ellipsis-v secondary"></i>
-									</a>
-									<span ngbDropdownMenu aria-labelledby="dropdownPat{{i}}" class="dropdown">
-										<a class="dropdown-item py-1" href="javascript:;" (click)="seeResults(questionnaire)">
-											<span class="fa fa-eye primary pointer me-1" style="width:20px"></span><span class="">{{'generics.View' | translate }}</span>
-										</a>
-										<a *ngIf="questionnaire.createdById==actuaGroup" class="dropdown-item py-1" href="javascript:;" (click)="editForm(questionnaire, contentModalForm)">
-											<span class="fa fa-edit primary pointer me-1" style="width:20px"></span><span class="">{{'generics.Edit' | translate }}</span> 
-										</a>
-										<a class="dropdown-item py-1" href="javascript:;" (click)="deleteForm(questionnaire)">
-											<span class="fa fa-trash primary pointer me-1" style="width:20px"></span><span class="">{{'generics.Delete' | translate }}</span> 
-										</a>
-									</span>
-								</span>
-								
-								<!--<span class="fa fa-eye primary pointer me-1 ms-1" (click)="seeResults(questionnaire)"></span>
-								<span *ngIf="questionnaire.createdById==actuaGroup"  class="fa fa-edit primary pointer me-1" (click)="editForm(questionnaire, contentModalForm)"></span>
-								<span class="fa fa-trash primary pointer" (click)="deleteForm(questionnaire)"></span>-->
-							</span>
-							<!--<span *ngIf="questionnaires.length>0 && (i>0) && (i<=questionnaires.length-1)">,</span>-->
-						</p>
-					</span>
-				</h4>
-			</div>
-		</div>
-	</div>
-	<div class="col-lg-12 col-12" *ngIf="showDetails">
-		<div class="card">
-			<div class="card-header">
-				<h5 class="card-title">{{'do.Answers' | translate }} of {{actualQuestionnaire.title}} </h5>
-				<p>{{actualQuestionnaire.description}}</p>
-			</div>
-
-			<div class="card" *ngIf="detailPatients.length>0">
-				<div class="card-header">
-					<h4 class="card-title">Patients</h4>
-				</div>
-				<div class="card-body table-responsive">
-					<table class="table text-center">
-						<thead>
-							<tr>
-								<th>patientId</th>
-								<th>Scores</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr *ngFor="let element of detailPatients ; let i = index">
-								<td>{{element.id}}</td>
-								<td>
-									<span *ngFor="let quest of element.questionnaires ; let j = index" class="d-block">
-										<span class="me-2">{{quest.points}}</span>
-										<span>({{quest.date | date}})</span>
-									</span>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-
-			<div class="card-body table-responsive" *ngIf="actualQuestionnaire.items.length >0">
-				<table class="table">
-					<thead>
-						<tr>
-							<th>Id</th>
-							<th>Questions</th>
-							<th>Answers</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr *ngFor="let element of actualQuestionnaire.items ; let i = index">
-							<td>{{element.idProm}}</td>
-							<td style="width: 30%;">{{element.text}}</td>
-							<td>
-								<p *ngFor="let item of element.answers ; let j = index">
-									<span class="d-block">{{item.text}}</span>
-									<span *ngIf="item.count"><strong>{{(item.count /max)*100 | number : '1.0-2'}}%</strong> ({{item.count}}-{{max}})</span>
-									<span *ngIf="!item.count"><strong>0%</strong></span>
-									<span *ngIf="item.otherfield">
-										<span *ngFor="let other of item.otherfield ; let k = index">
-											<span class="d-block ms-2">{{other}}</span>
-										</span>
-									</span>
-								</p>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-			<div class="card-body" *ngIf="actualQuestionnaire.items.length == 0">
-				{{'do.No data' | translate }}
-			</div>
-		</div>
-	</div>
+    </div>
+  }
+  @if (showDetails) {
+    <div class="col-lg-12 col-12">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title">{{'do.Answers' | translate }} of {{actualQuestionnaire.title}} </h5>
+          <p>{{actualQuestionnaire.description}}</p>
+        </div>
+        @if (detailPatients.length>0) {
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">Patients</h4>
+            </div>
+            <div class="card-body table-responsive">
+              <table class="table text-center">
+                <thead>
+                  <tr>
+                    <th>patientId</th>
+                    <th>Scores</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (element of detailPatients ; track element; let i = $index) {
+                    <tr>
+                      <td>{{element.id}}</td>
+                      <td>
+                        @for (quest of element.questionnaires ; track quest; let j = $index) {
+                          <span class="d-block">
+                            <span class="me-2">{{quest.points}}</span>
+                            <span>({{quest.date | date}})</span>
+                          </span>
+                        }
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          </div>
+        }
+        @if (actualQuestionnaire.items.length >0) {
+          <div class="card-body table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Questions</th>
+                  <th>Answers</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (element of actualQuestionnaire.items ; track element; let i = $index) {
+                  <tr>
+                    <td>{{element.idProm}}</td>
+                    <td style="width: 30%;">{{element.text}}</td>
+                    <td>
+                      @for (item of element.answers ; track item; let j = $index) {
+                        <p>
+                          <span class="d-block">{{item.text}}</span>
+                          @if (item.count) {
+                            <span><strong>{{(item.count /max)*100 | number : '1.0-2'}}%</strong> ({{item.count}}-{{max}})</span>
+                          }
+                          @if (!item.count) {
+                            <span><strong>0%</strong></span>
+                          }
+                          @if (item.otherfield) {
+                            <span>
+                              @for (other of item.otherfield ; track other; let k = $index) {
+                                <span>
+                                  <span class="d-block ms-2">{{other}}</span>
+                                </span>
+                              }
+                            </span>
+                          }
+                        </p>
+                      }
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        }
+        @if (actualQuestionnaire.items.length == 0) {
+          <div class="card-body">
+            {{'do.No data' | translate }}
+          </div>
+        }
+      </div>
+    </div>
+  }
 
 </div>
 
 <ng-template #contentModalForm let-c="close" let-d="dismiss" appendTo="body">
-	<div class="modal-header d-block" id="idHeader">
-	  <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
-	  <div>
-		<h4 class="mb-0">
-			{{'do.Questionnaire' | translate }}
-			<span class="font-small-3 mute d-block text-break">{{actualQuestionnaire.title}}</span>
-		</h4>
-	  </div>
-	</div>
-	  <div class="content-wrapper" *ngIf="!showPanelNew">
-		<!--<fieldset>
-			<div class="row mt-3">
-			  <div class="col-md-12">
-				<div class="form-group">
-				  <label for="id">Id</label>
-				  <input type="text" id="id" class="form-control"  name="id" [disabled]="updatingQuestionnaire" [(ngModel)]="actualQuestionnaire.id" required #id="ngModel">
-				  <small class="form-text title-muted danger" *ngIf="!id.valid && (id.dirty || id.touched)">{{'generics.required' | translate }}</small>
-				</div>
-			  </div>
-			</div>
-		  </fieldset>-->
-		<fieldset>
-			<div class="row mt-3">
-			  <div class="col-md-12">
-				<div class="form-group">
-				  <label for="title">{{'do.Title' | translate }}</label>
-				  <input type="text" id="title" class="form-control"  name="title" [(ngModel)]="actualQuestionnaire.title" required #title="ngModel">
-				  <small class="form-text title-muted danger" *ngIf="!title.valid && (title.dirty || title.touched)">{{'generics.required' | translate }}</small>
-				</div>
-			  </div>
-			</div>
-		  </fieldset>
-		  <fieldset>
-			<div class="row mt-2">
-			  <div class="col-md-12">
-				<div class="form-group">
-				  <label for="description">Description</label>
-				  <input type="text" id="description" class="form-control"  name="description" [(ngModel)]="actualQuestionnaire.description" required #description="ngModel">
-				  <small class="form-text title-muted danger" *ngIf="!description.valid && (description.dirty || description.touched)">{{'generics.required' | translate }}</small>
-				</div>
-			  </div>
-			</div>
-		  </fieldset>
-		  <fieldset>
-			<div class="row mt-2">
-			  <div class="col-md-12">
-				<div class="form-group">
-				  <label for="periodicity">Periodicity (how many days the patient has to repeat the form)</label>
-				  <input type="number" id="periodicity" class="form-control" name="periodicity" [(ngModel)]="actualQuestionnaire.periodicity" #periodicity="ngModel">
-				  <small class="form-text title-muted danger" *ngIf="periodicity.errors?.pattern && (periodicity.dirty || periodicity.touched)">
-					You must enter how many days you have to repeat the form
-				  </small>
-				</div>
-			  </div>
-			</div>
-		  </fieldset>
-		  <fieldset>
-			<div class="row mt-2">
-			  <div class="col-md-12">
-				<div class="form-group">
-				  <label for="img">Image url. Ex: https://dravet.eu/logo.png</label>
-				  <input type="text" id="img" class="form-control"  name="img" [(ngModel)]="actualQuestionnaire.img" required #img="ngModel">
-				  <small class="form-text title-muted danger" *ngIf="!img.valid && (img.dirty || img.touched)">{{'generics.required' | translate }}</small>
-				</div>
-			  </div>
-			</div>
-		  </fieldset>
-		<div class="row col-md-12">
-		  <div class="col-md-12">
-			<section>
-			  <div class="mt-2">
-				<p *ngFor="let element of actualQuestionnaire.items ; let i = index">
-					<span class="d-block">{{element.idProm}}. {{element.text}} <span class="fa fa-edit primary ms-1 pointer" (click)="editQuestion(element)"></span></span>
-					<span class="d-block"><strong>{{'do.Type' | translate }}:</strong> {{element.type}}</span>
-					<span class="d-block"><strong>{{'do.Has free text' | translate }}:</strong> <span *ngIf="element.other!=null"> Yes</span><span *ngIf="element.other==null"> No</span></span>
-					<span class="d-block">
-						<strong>{{'do.Answers' | translate }}:</strong> <span *ngFor="let answer of element.answers ; let j = index"><span *ngIf="element.answers.length>0 && (j>0) && (j<=element.answers.length-1)">, </span> <span [ngClass]="{'warning': (element.other==answer.value && element.other!=null)}">{{answer.text}}</span></span>
-					</span>
-				</p>
-			  </div>
-			</section>
-		  </div>
-		</div>
-		<div class="row">
-			<div class="col-sm-12">
-			  <div class="form-group">
-				<a (click)="newQuestion()" class="btn btn-outline-primary" href="javascript:void(0)"><i class="fa fa-plus"></i> {{'do.New Question' | translate }}</a>
-			  </div>
-			</div>
-		  </div>
-		  <div class="row">
-			<div class="col-sm-12">
-			  <div class="form-group center-elements">
-				<button class="btn btn-raised btn-raised btn-primary" (click)="saveQuestionnaire()"><i class="fa fa-check-square-o"></i> {{'generics.Save' | translate }}</button>
-			  </div>
-			</div>
-		  </div>
-	</div>
-	<div class="content-wrapper" *ngIf="showPanelNew">
-		<form class="form" (ngSubmit)="onSubmitNew()" #f="ngForm">
-			<fieldset>
-				<div class="row mt-3">
-				  <div class="col-md-12">
-					<div class="form-group">
-					  <label for="text">Question</label>
-					  <input type="text" id="text" class="form-control"  name="text" [(ngModel)]="changeQuestion.text" required #text="ngModel">
-					  <small class="form-text text-muted danger" *ngIf="!text.valid && (text.dirty || text.touched)">{{'generics.required' | translate }}</small>
-					</div>
-				  </div>
-				</div>
-			  </fieldset>
-			  <fieldset>
-				<div class="row">
-					<div class="col-md-12">
-						<div class="form-group">
-							<label for="type">{{'do.Response Type' | translate }}</label>
-							<select id="type" name="type" class="form-control" [(ngModel)]="changeQuestion.type" #type="ngModel">
-								<option value="ChoiceSet">Choice Set</option>
-								<option value="radioButtons">Radio buttons</option>
-							</select>
-						</div>
-					</div>
-				</div>
-			</fieldset>
-			<fieldset>
-			  <div class="row">
-				<div class="col-md-12">
-				  <div class="form-group" *ngFor="let question of changeQuestion.answers ; let i=index">
-					<label for="shortDescription2">{{'do.Answer' | translate }} {{i+1}}</label>
-					<span *ngIf="i!=0">
-					  <a class="btn btn-outline-danger mb-1 float-end" (click)="deleteAltQuestion(i)" href="javascript:void(0)"><i class="fa fa-times"></i></a>
-					</span>
-					<input type="text" id="question.text{{i}}" class="form-control"  name="question.text{{i}}" [(ngModel)]="question.text" required #text="ngModel" (change)="changeValue(question.text, i)">
-				  </div>
-				</div>
-			  </div>
-			</fieldset>
-			<fieldset>
-				<div class="row">
-				  <div class="col-md-12">
-					<label for="shortDescription2">{{'do.Field to show free text' | translate }}</label>
-					<select id="other" name="other" class="form-control" [(ngModel)]="changeQuestion.other">
-					  <option [ngValue]="null" selected>--{{'do.Select a field' | translate }}--</option>
-					  <option *ngFor="let question of changeQuestion.answers" [ngValue]="question.value"><span>{{question.text}}</span></option>
-					</select>
-				</div>
-			</div>
-		  </fieldset>
+  <div class="modal-header d-block" id="idHeader">
+    <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
+    <div>
+      <h4 class="mb-0">
+        {{'do.Questionnaire' | translate }}
+        <span class="font-small-3 mute d-block text-break">{{actualQuestionnaire.title}}</span>
+      </h4>
+    </div>
+  </div>
+  @if (!showPanelNew) {
+    <div class="content-wrapper">
+      <!--<fieldset>
+      <div class="row mt-3">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="id">Id</label>
+            <input type="text" id="id" class="form-control"  name="id" [disabled]="updatingQuestionnaire" [(ngModel)]="actualQuestionnaire.id" required #id="ngModel">
+            <small class="form-text title-muted danger" *ngIf="!id.valid && (id.dirty || id.touched)">{{'generics.required' | translate }}</small>
+          </div>
+        </div>
+      </div>
+    </fieldset>-->
+    <fieldset>
+      <div class="row mt-3">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="title">{{'do.Title' | translate }}</label>
+            <input type="text" id="title" class="form-control"  name="title" [(ngModel)]="actualQuestionnaire.title" required #title="ngModel">
+            @if (!title.valid && (title.dirty || title.touched)) {
+              <small class="form-text title-muted danger">{{'generics.required' | translate }}</small>
+            }
+          </div>
+        </div>
+      </div>
+    </fieldset>
+    <fieldset>
+      <div class="row mt-2">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="description">Description</label>
+            <input type="text" id="description" class="form-control"  name="description" [(ngModel)]="actualQuestionnaire.description" required #description="ngModel">
+            @if (!description.valid && (description.dirty || description.touched)) {
+              <small class="form-text title-muted danger">{{'generics.required' | translate }}</small>
+            }
+          </div>
+        </div>
+      </div>
+    </fieldset>
+    <fieldset>
+      <div class="row mt-2">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="periodicity">Periodicity (how many days the patient has to repeat the form)</label>
+            <input type="number" id="periodicity" class="form-control" name="periodicity" [(ngModel)]="actualQuestionnaire.periodicity" #periodicity="ngModel">
+            @if (periodicity.errors?.pattern && (periodicity.dirty || periodicity.touched)) {
+              <small class="form-text title-muted danger">
+                You must enter how many days you have to repeat the form
+              </small>
+            }
+          </div>
+        </div>
+      </div>
+    </fieldset>
+    <fieldset>
+      <div class="row mt-2">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="img">Image url. Ex: https://dravet.eu/logo.png</label>
+            <input type="text" id="img" class="form-control"  name="img" [(ngModel)]="actualQuestionnaire.img" required #img="ngModel">
+            @if (!img.valid && (img.dirty || img.touched)) {
+              <small class="form-text title-muted danger">{{'generics.required' | translate }}</small>
+            }
+          </div>
+        </div>
+      </div>
+    </fieldset>
+    <div class="row col-md-12">
+      <div class="col-md-12">
+        <section>
+          <div class="mt-2">
+            @for (element of actualQuestionnaire.items ; track element; let i = $index) {
+              <p>
+                <span class="d-block">{{element.idProm}}. {{element.text}} <span class="fa fa-edit primary ms-1 pointer" (click)="editQuestion(element)"></span></span>
+                <span class="d-block"><strong>{{'do.Type' | translate }}:</strong> {{element.type}}</span>
+                <span class="d-block"><strong>{{'do.Has free text' | translate }}:</strong> @if (element.other!=null) {
+                <span> Yes</span>
+                }@if (element.other==null) {
+                <span> No</span>
+              }</span>
+              <span class="d-block">
+                <strong>{{'do.Answers' | translate }}:</strong> @for (answer of element.answers ; track answer; let j = $index) {
+                <span>@if (element.answers.length>0 && (j>0) && (j<=element.answers.length-1)) {
+                  <span>, </span>
+                  } <span [ngClass]="{'warning': (element.other==answer.value && element.other!=null)}">{{answer.text}}</span></span>
+                }
+              </span>
+            </p>
+          }
+        </div>
+      </section>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="form-group">
+        <a (click)="newQuestion()" class="btn btn-outline-primary" href="javascript:void(0)"><i class="fa fa-plus"></i> {{'do.New Question' | translate }}</a>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="form-group center-elements">
+        <button class="btn btn-raised btn-raised btn-primary" (click)="saveQuestionnaire()"><i class="fa fa-check-square-o"></i> {{'generics.Save' | translate }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+}
+@if (showPanelNew) {
+  <div class="content-wrapper">
+    <form class="form" (ngSubmit)="onSubmitNew()" #f="ngForm">
+      <fieldset>
+        <div class="row mt-3">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="text">Question</label>
+              <input type="text" id="text" class="form-control"  name="text" [(ngModel)]="changeQuestion.text" required #text="ngModel">
+              @if (!text.valid && (text.dirty || text.touched)) {
+                <small class="form-text text-muted danger">{{'generics.required' | translate }}</small>
+              }
+            </div>
+          </div>
+        </div>
+      </fieldset>
+      <fieldset>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="type">{{'do.Response Type' | translate }}</label>
+              <select id="type" name="type" class="form-control" [(ngModel)]="changeQuestion.type" #type="ngModel">
+                <option value="ChoiceSet">Choice Set</option>
+                <option value="radioButtons">Radio buttons</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+      <fieldset>
+        <div class="row">
+          <div class="col-md-12">
+            @for (question of changeQuestion.answers ; track question; let i = $index) {
+              <div class="form-group">
+                <label for="shortDescription2">{{'do.Answer' | translate }} {{i+1}}</label>
+                @if (i!=0) {
+                  <span>
+                    <a class="btn btn-outline-danger mb-1 float-end" (click)="deleteAltQuestion(i)" href="javascript:void(0)"><i class="fa fa-times"></i></a>
+                  </span>
+                }
+                <input type="text" id="question.text{{i}}" class="form-control"  name="question.text{{i}}" [(ngModel)]="question.text" required #text="ngModel" (change)="changeValue(question.text, i)">
+              </div>
+            }
+          </div>
+        </div>
+      </fieldset>
+      <fieldset>
+        <div class="row">
+          <div class="col-md-12">
+            <label for="shortDescription2">{{'do.Field to show free text' | translate }}</label>
+            <select id="other" name="other" class="form-control" [(ngModel)]="changeQuestion.other">
+              <option [ngValue]="null" selected>--{{'do.Select a field' | translate }}--</option>
+              @for (question of changeQuestion.answers; track question) {
+                <option [ngValue]="question.value"><span>{{question.text}}</span></option>
+              }
+            </select>
+          </div>
+        </div>
+      </fieldset>
+      <div class="form-group mt-3">
+        <a (click)="addQuestion()" class="btn btn-outline-primary" href="javascript:void(0)"><i class="fa fa-plus"></i> {{'do.Add Answer' | translate }}</a>
+      </div>
+      <div class="center-elements">
+        <button type="button" (click)="cancelNewQuestion()" class="btn btn-raised btn-raised btn-warning me-1">
+          <i class="ft-x"></i> {{'generics.Cancel' | translate }}
+        </button>
+        @if (f.valid) {
+          <button class="btn btn-raised btn-raised btn-primary" type="submit"><i class="fa fa-check-square-o"></i> {{'generics.Save' | translate }}</button>
+        } @else {
+          <button class="btn btn-raised btn-raised btn-primary" type="button" (click)="submitInvalidForm()"><i class="fa fa-check-square-o"></i> {{'generics.Save' | translate }}</button>
+        }
+      </div>
+    </form>
+  </div>
+}
+<!--<div class="modal-footer">
+<div class="col-md-12 center-elements">
+  <div class="form-actions center">
+    <button *ngIf="maxStep>='5.0'" type="button" class="mt-2 me-3 btn secondary btn-outline-secondary" (click)="cancelAnalysis()"><span style="margin-right: 10px;"></span> {{'generics.Cancel' | translate }}</button>
+    <button *ngIf="maxStep<'5.0'" type="button" class="mt-2 me-3 btn secondary btn-outline-secondary" (click)="goPrevStep()"><span style="margin-right: 10px;"></span> {{'generics.Cancel' | translate }}</button>
+  </div>
+</div>
+</div>-->
 
-			<div class="form-group mt-3">
-				<a (click)="addQuestion()" class="btn btn-outline-primary" href="javascript:void(0)"><i class="fa fa-plus"></i> {{'do.Add Answer' | translate }}</a>
-			  </div>
-			
-			<div class="center-elements">
-			  <button type="button" (click)="cancelNewQuestion()" class="btn btn-raised btn-raised btn-warning me-1">
-				<i class="ft-x"></i> {{'generics.Cancel' | translate }}
-			  </button>
-			  <div *ngIf="f.valid;then formValid else formError"></div>
-							  <ng-template #formValid><button class="btn btn-raised btn-raised btn-primary" type="submit"><i class="fa fa-check-square-o"></i> {{'generics.Save' | translate }}</button></ng-template>
-							  <ng-template #formError><button class="btn btn-raised btn-raised btn-primary" type="button" (click)="submitInvalidForm()"><i class="fa fa-check-square-o"></i> {{'generics.Save' | translate }}</button></ng-template>
-			</div>
-		  </form>
-	</div>
-	<!--<div class="modal-footer">
-	  <div class="col-md-12 center-elements">
-		<div class="form-actions center">
-		  <button *ngIf="maxStep>='5.0'" type="button" class="mt-2 me-3 btn secondary btn-outline-secondary" (click)="cancelAnalysis()"><span style="margin-right: 10px;"></span> {{'generics.Cancel' | translate }}</button>
-		  <button *ngIf="maxStep<'5.0'" type="button" class="mt-2 me-3 btn secondary btn-outline-secondary" (click)="goPrevStep()"><span style="margin-right: 10px;"></span> {{'generics.Cancel' | translate }}</button>
-		</div>
-	  </div>
-	</div>-->
-  
-  </ng-template>
+</ng-template>
 
-  <ng-template #contentModalSearch let-c="close" let-d="dismiss" appendTo="body">
-	<div class="modal-header d-block" id="idHeader">
-	  <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
-	  <div>
-		<h4 class="mb-0">
-			Questionnaires repository <span class="btn btn-outline-primary btn-sm ms-1 mb-0" style="text-transform: initial;" (click)="closeModal();addForm(contentModalForm)">New</span>
-		</h4>
-	  </div>
-	</div>
-	<div class="content-wrapper" >
-		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-<div class="container">
-	<div class="row mt-3" *ngIf="!loadedAllQuestionaires">
-		<div class="col-md-12 center-elements"> 
-			<i class="fa fa-spinner pink fa-spin fa-3x fa-fw"></i>
-		</div>
-		
-	</div>
-    <div class="row mt-3" *ngIf="loadedAllQuestionaires">
-        <!-- Product-->
-		<div class="col-lg-4 col-sm-6 mb-30" *ngFor="let questionnaire of allQuestionnaires ; let i = index" >
-			<div class="product-card mx-auto mb-5">
+<ng-template #contentModalSearch let-c="close" let-d="dismiss" appendTo="body">
+  <div class="modal-header d-block" id="idHeader">
+    <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
+    <div>
+      <h4 class="mb-0">
+        Questionnaires repository <span class="btn btn-outline-primary btn-sm ms-1 mb-0" style="text-transform: initial;" (click)="closeModal();addForm(contentModalForm)">New</span>
+      </h4>
+    </div>
+  </div>
+  <div class="content-wrapper" >
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <div class="container">
+      @if (!loadedAllQuestionaires) {
+        <div class="row mt-3">
+          <div class="col-md-12 center-elements">
+            <i class="fa fa-spinner pink fa-spin fa-3x fa-fw"></i>
+          </div>
+        </div>
+      }
+      @if (loadedAllQuestionaires) {
+        <div class="row mt-3">
+          <!-- Product-->
+          @for (questionnaire of allQuestionnaires ; track questionnaire; let i = $index) {
+            <div class="col-lg-4 col-sm-6 mb-30" >
+              <div class="product-card mx-auto mb-5">
                 <div class="product-head d-flex justify-content-between align-items-center">
-					<span *ngIf="questionnaire.installed" class="badge badge-info">Installed</span>
-					<span *ngIf="!questionnaire.installed" class="badge badge-dark pointer" (click)="addQuestionnaire(questionnaire.id)">Install</span>
-					<div class="star">
-						<ngb-rating [max]="5" [(rate)]="questionnaire.data.rate.avg" title="{{questionnaire.data.rate.avg | number : '1.0-2'}} " [readonly]="false" (rateChange)="callevent(questionnaire, questionnaire.data.rate.avg)"></ngb-rating>
-						<span>({{questionnaire.data.rate.ids.length}})</span>
-					</div>
+                  @if (questionnaire.installed) {
+                    <span class="badge badge-info">Installed</span>
+                  }
+                  @if (!questionnaire.installed) {
+                    <span class="badge badge-dark pointer" (click)="addQuestionnaire(questionnaire.id)">Install</span>
+                  }
+                  <div class="star">
+                    <ngb-rating [max]="5" [(rate)]="questionnaire.data.rate.avg" title="{{questionnaire.data.rate.avg | number : '1.0-2'}} " [readonly]="false" (rateChange)="callevent(questionnaire, questionnaire.data.rate.avg)"></ngb-rating>
+                    <span>({{questionnaire.data.rate.ids.length}})</span>
+                  </div>
                 </div>
                 <a class="product-thumb mt-3 mb-3 p-2" href="javascript:void(0)"><img [src]=questionnaire.data.img alt="Logo dravet europe"></a>
                 <div class="product-card-body"><a class="product-meta" href="javascript:void(0)">{{questionnaire.data.createdby}}</a>
-                    <h5 class="product-title">{{questionnaire.data.title}}</h5><span class="product-price">{{questionnaire.data.description}}</span>
+                <h5 class="product-title">{{questionnaire.data.title}}</h5><span class="product-price">{{questionnaire.data.description}}</span>
+              </div>
+              <div class="product-buttons-wrap">
+                <div class="product-buttons">
+                  @if (!questionnaire.installed) {
+                    <div class="product-button"><a href="javascript:void(0)"  (click)="addQuestionnaire(questionnaire.id)"><i class="fa fa-heart"></i></a></div>
+                  }
+                  @if (questionnaire.installed) {
+                    <div class="product-button"><a href="javascript:void(0)" (click)="deleteForm(questionnaire)"><i class="fa fa-trash"></i></a></div>
+                  }
                 </div>
-                <div class="product-buttons-wrap">
-                    <div class="product-buttons">
-                        <div *ngIf="!questionnaire.installed" class="product-button"><a href="javascript:void(0)"  (click)="addQuestionnaire(questionnaire.id)"><i class="fa fa-heart"></i></a></div>
-						<div *ngIf="questionnaire.installed" class="product-button"><a href="javascript:void(0)" (click)="deleteForm(questionnaire)"><i class="fa fa-trash"></i></a></div>
-                    </div>
-                </div>
+              </div>
             </div>
-		</div>
+          </div>
+        }
         <!--<div class="col-lg-4 col-sm-6 mb-30">
-            <div class="product-card mx-auto mb-3">
-                <div class="product-head d-flex justify-content-between align-items-center"><span class="badge badge-info">Installed</span>
-                    <div class="rating-stars"><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star active"></i>
-                    </div>
-                </div>
-                <a class="product-thumb mt-3 mb-3 p-2" href="#"><img src="https://foundation29.org/assets/img/logo-f29.webp" alt="logo foundation29"></a>
-                <div class="product-card-body"><a class="product-meta" href="#">Foundation29</a>
-                    <h5 class="product-title">General questions of Dravet syndrome</h5><span class="product-price">
-                    Free</span>
-                </div>
-                <div class="product-buttons-wrap">
-                    <div class="product-buttons">
-                        <div class="product-button"><a href="#"  ><i class="fa fa-heart"></i></a></div>
-                        <div class="product-button"><a href="#" ><i class="fa fa-trash"></i></a></div>
-                    </div>
-                </div>
-            </div>
+        <div class="product-card mx-auto mb-3">
+          <div class="product-head d-flex justify-content-between align-items-center"><span class="badge badge-info">Installed</span>
+          <div class="rating-stars"><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star active"></i>
         </div>
-        <div class="col-lg-4 col-sm-6 mb-30">
-            <div class="product-card mx-auto mb-5">
-                <div class="product-head d-flex justify-content-between align-items-center"><span class="badge badge-success">Popular</span>
-                    <div class="rating-stars"><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star active"></i>
-                    </div>
-                </div>
-                <a class="product-thumb" href="#"><img src="https://dravet.eu/wp-content/uploads/2020/04/logo-Dravet-europa-217x230-1.png" alt="Logo dravet europe"></a>
-                <div class="product-card-body"><a class="product-meta" href="#">Dravet Syndrome European Federation</a>
-                    <h5 class="product-title">Demographic questionnaire</h5><span class="product-price">Free</span>
-                </div>
-                <div class="product-buttons-wrap">
-                    <div class="product-buttons">
-                        <div class="product-button"><a href="#"  ><i class="fa fa-heart"></i></a></div>
-                        <div class="product-button"><a href="#" ><i class="fa fa-trash"></i></a></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-		 <div class="col-lg-4 col-sm-6 mb-30">
-            <div class="product-card mx-auto mb-3">
-                <div class="product-head text-end">
-                    <div class="rating-stars"><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star"></i>
-                    </div>
-                </div>
-                <a class="product-thumb" href="#"><img src="https://dravet.eu/wp-content/uploads/2020/04/logo-Dravet-europa-217x230-1.png" alt="Logo dravet europe"></a>
-                <div class="product-card-body"><a class="product-meta" href="#">Dravet Syndrome European Federation</a>
-                    <h5 class="product-title">Caregivers questionnaire</h5><span class="product-price">Free</span>
-                </div>
-                <div class="product-buttons-wrap">
-                    <div class="product-buttons">
-                        <div class="product-button"><a href="#"  ><i class="fa fa-heart"></i></a></div>
-                        <div class="product-button"><a href="#" ><i class="fa fa-trash"></i></a></div>
-                    </div>
-                </div>
-            </div>
-        </div>-->
+      </div>
+      <a class="product-thumb mt-3 mb-3 p-2" href="#"><img src="https://foundation29.org/assets/img/logo-f29.webp" alt="logo foundation29"></a>
+      <div class="product-card-body"><a class="product-meta" href="#">Foundation29</a>
+      <h5 class="product-title">General questions of Dravet syndrome</h5><span class="product-price">
+    Free</span>
+  </div>
+  <div class="product-buttons-wrap">
+    <div class="product-buttons">
+      <div class="product-button"><a href="#"  ><i class="fa fa-heart"></i></a></div>
+      <div class="product-button"><a href="#" ><i class="fa fa-trash"></i></a></div>
     </div>
+  </div>
+</div>
+</div>
+<div class="col-lg-4 col-sm-6 mb-30">
+  <div class="product-card mx-auto mb-5">
+    <div class="product-head d-flex justify-content-between align-items-center"><span class="badge badge-success">Popular</span>
+    <div class="rating-stars"><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star active"></i>
+  </div>
+</div>
+<a class="product-thumb" href="#"><img src="https://dravet.eu/wp-content/uploads/2020/04/logo-Dravet-europa-217x230-1.png" alt="Logo dravet europe"></a>
+<div class="product-card-body"><a class="product-meta" href="#">Dravet Syndrome European Federation</a>
+<h5 class="product-title">Demographic questionnaire</h5><span class="product-price">Free</span>
+</div>
+<div class="product-buttons-wrap">
+  <div class="product-buttons">
+    <div class="product-button"><a href="#"  ><i class="fa fa-heart"></i></a></div>
+    <div class="product-button"><a href="#" ><i class="fa fa-trash"></i></a></div>
+  </div>
+</div>
+</div>
+</div>
+<div class="col-lg-4 col-sm-6 mb-30">
+  <div class="product-card mx-auto mb-3">
+    <div class="product-head text-end">
+      <div class="rating-stars"><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star"></i>
+    </div>
+  </div>
+  <a class="product-thumb" href="#"><img src="https://dravet.eu/wp-content/uploads/2020/04/logo-Dravet-europa-217x230-1.png" alt="Logo dravet europe"></a>
+  <div class="product-card-body"><a class="product-meta" href="#">Dravet Syndrome European Federation</a>
+  <h5 class="product-title">Caregivers questionnaire</h5><span class="product-price">Free</span>
+</div>
+<div class="product-buttons-wrap">
+  <div class="product-buttons">
+    <div class="product-button"><a href="#"  ><i class="fa fa-heart"></i></a></div>
+    <div class="product-button"><a href="#" ><i class="fa fa-trash"></i></a></div>
+  </div>
+</div>
+</div>
+</div>-->
+</div>
+}
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.10.0/feather.js"></script>
-	</div>
-	<!--<div class="modal-footer">
-	  <div class="col-md-12 center-elements">
-		<div class="form-actions center">
-		  <button *ngIf="maxStep>='5.0'" type="button" class="mt-2 me-3 btn secondary btn-outline-secondary" (click)="cancelAnalysis()"><span style="margin-right: 10px;"></span> {{'generics.Cancel' | translate }}</button>
-		  <button *ngIf="maxStep<'5.0'" type="button" class="mt-2 me-3 btn secondary btn-outline-secondary" (click)="goPrevStep()"><span style="margin-right: 10px;"></span> {{'generics.Cancel' | translate }}</button>
-		</div>
-	  </div>
-	</div>-->
-  
-  </ng-template>
+</div>
+<!--<div class="modal-footer">
+<div class="col-md-12 center-elements">
+  <div class="form-actions center">
+    <button *ngIf="maxStep>='5.0'" type="button" class="mt-2 me-3 btn secondary btn-outline-secondary" (click)="cancelAnalysis()"><span style="margin-right: 10px;"></span> {{'generics.Cancel' | translate }}</button>
+    <button *ngIf="maxStep<'5.0'" type="button" class="mt-2 me-3 btn secondary btn-outline-secondary" (click)="goPrevStep()"><span style="margin-right: 10px;"></span> {{'generics.Cancel' | translate }}</button>
+  </div>
+</div>
+</div>-->
+
+</ng-template>

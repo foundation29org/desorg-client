@@ -1,28 +1,30 @@
 <!-- Navbar (Header) Starts -->
 <nav class="header-navbar navbar navbar-expand-lg navbar-light bg-faded" style="min-height: 3em;">
-    <div class="container-fluid">
-        <div class="navbar-header pointer" routerLink="/.">
-          <img class="logo-img" src='assets/img/logo-raito.png' />
-         <span class="font-large-2 text-bold-600 primary" style="position: absolute;top: 14%;">Raito</span>
-            <span style="position: absolute;top: 64%;left: 6.5%;" class="font-medium-1 d-block primary">Network</span>
-        </div>
-        <div class="navbar-container">
-            <div class="navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav m-r-0">
-                    <li class="nav-item ms-2 d-inline" ngbDropdown display="dynamic" placement="bottom-right">
-                        <a class="position-relative colorlink" id="dropdownLang" ngbDropdownToggle>
-                            <u>{{currentLang}}</u>
-                        </a>
-                        <div ngbDropdownMenu aria-labelledby="dropdownLang" class="dropdownLang">
-                            <a *ngFor="let lang of langs" class="dropdown-item py-1 lang" href="javascript:;" (click)="ChangeLanguage(lang.code)">
-                                <span>{{lang.name}}</span>
-                            </a>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
+  <div class="container-fluid">
+    <div class="navbar-header pointer" routerLink="/.">
+      <img class="logo-img" src='assets/img/logo-raito.png' />
+      <span class="font-large-2 text-bold-600 primary" style="position: absolute;top: 14%;">Raito</span>
+      <span style="position: absolute;top: 64%;left: 6.5%;" class="font-medium-1 d-block primary">Network</span>
     </div>
+    <div class="navbar-container">
+      <div class="navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav m-r-0">
+          <li class="nav-item ms-2 d-inline" ngbDropdown display="dynamic" placement="bottom-right">
+            <a class="position-relative colorlink" id="dropdownLang" ngbDropdownToggle>
+              <u>{{currentLang}}</u>
+            </a>
+            <div ngbDropdownMenu aria-labelledby="dropdownLang" class="dropdownLang">
+              @for (lang of langs; track lang) {
+                <a class="dropdown-item py-1 lang" href="javascript:;" (click)="ChangeLanguage(lang.code)">
+                  <span>{{lang.name}}</span>
+                </a>
+              }
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </nav>
 
 <!-- Navbar (Header) Ends -->

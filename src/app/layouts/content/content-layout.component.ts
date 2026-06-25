@@ -1,6 +1,6 @@
-import { Component, OnInit, AfterViewInit, ElementRef, Inject, Renderer2, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ElementRef, Inject, Renderer2, ViewChild, DOCUMENT } from '@angular/core';
 import { ConfigService } from 'app/shared/services/config.service';
-import { DOCUMENT } from '@angular/common';
+
 
 @Component({
     standalone: false,

@@ -2,8 +2,10 @@
   <app-navbar-nolog></app-navbar-nolog>
   <div class="main-panel">
     <div class="main-content">
-          <router-outlet></router-outlet>
-          <div *ngIf="!isApp"><app-footer></app-footer></div>
+      <router-outlet></router-outlet>
+      @if (!isApp) {
+        <div><app-footer></app-footer></div>
+      }
     </div>
   </div>
 </div>
