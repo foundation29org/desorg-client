@@ -6,25 +6,25 @@
   <a class="customizer-toggle bg-danger" id="customizer-toggle-icon" (click)="toggleCustomizer()">
     <i class="ft-settings font-medium-4 fa fa-spin white align-middle"></i>
   </a>
-  <div [perfectScrollbar] class="customizer-content p-3 ps-container ps-theme-dark text-left" data-ps-id="df6a5ce4-a175-9172-4402-dabd98fc9c0a">
+  <div [perfectScrollbar] class="customizer-content p-3 ps-container ps-theme-dark text-start" data-ps-id="df6a5ce4-a175-9172-4402-dabd98fc9c0a">
     <h4 class="text-uppercase mb-0 text-bold-400">Theme Customizer</h4>
     <p>Customize &amp; Preview in Real Time</p>
     <hr>
 
     <!-- Layout Options-->
     <h6 class="text-center text-bold-500 mb-3 text-uppercase">Layout Options</h6>
-    <div class="layout-switch ml-4">
-      <div class="custom-control custom-radio d-inline-block custom-control-inline light-layout">
-        <input class="custom-control-input" id="ll-switch" type="radio" name="layout-switch" [checked]="config.layout.variant === 'Light'"  (click)="onLightLayout()" />
-        <label class="custom-control-label" for="ll-switch">Light</label>
+    <div class="layout-switch ms-4">
+      <div class="form-check d-inline-block form-check-inline light-layout">
+        <input class="form-check-input" id="ll-switch" type="radio" name="layout-switch" [checked]="config.layout.variant === 'Light'"  (click)="onLightLayout()" />
+        <label class="form-check-label" for="ll-switch">Light</label>
       </div>
-      <div class="custom-control custom-radio d-inline-block custom-control-inline dark-layout">
-        <input class="custom-control-input" id="dl-switch" type="radio" name="layout-switch" [checked]="config.layout.variant === 'Dark'" (click)="onDarkLayout()" />
-        <label class="custom-control-label" for="dl-switch">Dark</label>
+      <div class="form-check d-inline-block form-check-inline dark-layout">
+        <input class="form-check-input" id="dl-switch" type="radio" name="layout-switch" [checked]="config.layout.variant === 'Dark'" (click)="onDarkLayout()" />
+        <label class="form-check-label" for="dl-switch">Dark</label>
       </div>
-      <div class="custom-control custom-radio d-inline-block custom-control-inline transparent-layout">
-        <input class="custom-control-input" id="tl-switch" type="radio" name="layout-switch" [checked]="config.layout.variant === 'Transparent'" (click)="onTransparentLayout()" />
-        <label class="custom-control-label" for="tl-switch">Transparent</label>
+      <div class="form-check d-inline-block form-check-inline transparent-layout">
+        <input class="form-check-input" id="tl-switch" type="radio" name="layout-switch" [checked]="config.layout.variant === 'Transparent'" (click)="onTransparentLayout()" />
+        <label class="form-check-label" for="tl-switch">Transparent</label>
       </div>
     </div>
     <hr />
@@ -106,10 +106,10 @@
     <div class="togglebutton toggle-sb-bg-img">
       <div class="switch switch border-0 d-flex justify-content-between w-100">
         <span>Sidebar Bg Image</span>
-        <div class="float-right">
-          <div class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
-            <input type="checkbox" class="custom-control-input cz-bg-image-display" checked id="sidebar-bg-img" (change)="bgImageDisplay($event)">
-            <label class="custom-control-label d-block" for="sidebar-bg-img"></label>
+        <div class="float-end">
+          <div class="form-check mb-2 me-sm-2 mb-sm-0">
+            <input type="checkbox" class="form-check-input cz-bg-image-display" checked id="sidebar-bg-img" (change)="bgImageDisplay($event)">
+            <label class="form-check-label d-block" for="sidebar-bg-img"></label>
           </div>
         </div>
       </div>
@@ -121,10 +121,10 @@
     <div class="togglebutton">
       <div class="switch switch border-0 d-flex justify-content-between w-100">
         <span>Compact Menu</span>
-        <div class="float-right">
-          <div class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
-            <input type="checkbox" [checked]="config.layout.sidebar.collapsed" class="custom-control-input cz-compact-menu" id="cz-compact-menu" (change)="toggleCompactMenu($event)">
-            <label class="custom-control-label d-block" for="cz-compact-menu"></label>
+        <div class="float-end">
+          <div class="form-check mb-2 me-sm-2 mb-sm-0">
+            <input type="checkbox" [checked]="config.layout.sidebar.collapsed" class="form-check-input cz-compact-menu" id="cz-compact-menu" (change)="toggleCompactMenu($event)">
+            <label class="form-check-label d-block" for="cz-compact-menu"></label>
           </div>
         </div>
       </div>
@@ -136,11 +136,11 @@
     <div class="togglebutton">
       <div class="switch switch border-0 d-flex justify-content-between w-100">
         <span>RTL</span>
-        <div class="float-right">
-          <div class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
-            <input type="checkbox" [checked]="options.direction == 'rtl' ? 'checked' : false" class="custom-control-input cz-rtl"
+        <div class="float-end">
+          <div class="form-check mb-2 me-sm-2 mb-sm-0">
+            <input type="checkbox" [checked]="options.direction == 'rtl' ? 'checked' : false" class="form-check-input cz-rtl"
               id="cz-rtl" (change)="options.direction = (options.direction == 'rtl' ? 'ltr' : 'rtl'); sendOptions()">
-            <label class="custom-control-label d-block" for="cz-rtl"></label>
+            <label class="form-check-label d-block" for="cz-rtl"></label>
           </div>
         </div>
       </div>
@@ -151,7 +151,7 @@
     <!--Sidebar Width Starts-->
     <div>
       <label for="cz-sidebar-width">Sidebar Width</label>
-      <select id="cz-sidebar-width" #width class="custom-select cz-sidebar-width float-right" (change)="changeSidebarWidth(width.value)">
+      <select id="cz-sidebar-width" #width class="custom-select cz-sidebar-width float-end" (change)="changeSidebarWidth(width.value)">
         <option value="sidebar-sm" [selected] = "size === 'sidebar-sm'">Small</option>
         <option value="sidebar-md" [selected] = "size === 'sidebar-md'">Medium</option>
         <option value="sidebar-lg" [selected] = "size === 'sidebar-lg'">Large</option>

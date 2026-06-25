@@ -77,15 +77,15 @@
                               <button (click)="goToLogin()" type="button" class="btn btn-grey btn-outline-grey">{{'generics.Cancel' | translate }}</button>
                               <span *ngIf="!sending">
                                 <div *ngIf="f.valid && openedTerms;then formValid else formError"></div>
-                                <ng-template #formValid><button class="ml-2 btn btn-dark" type="submit"> {{'registration.Get Started' | translate }}</button></ng-template>
-                                <ng-template #formError><button class="ml-2 btn btn-dark" type="button" (click)="submitInvalidForm()"> {{'registration.Get Started' | translate }}</button></ng-template>
+                                <ng-template #formValid><button class="ms-2 btn btn-dark" type="submit"> {{'registration.Get Started' | translate }}</button></ng-template>
+                                <ng-template #formError><button class="ms-2 btn btn-dark" type="button" (click)="submitInvalidForm()"> {{'registration.Get Started' | translate }}</button></ng-template>
                               </span>
                               <span *ngIf="sending">
                                 <i class="fa fa-spinner fa-spin fa-3x fa-fw white"></i>
                               </span>
                           </div>
                           <div *ngIf="isEmailBusy" class="form-group text-center">
-                              <span class="pl-2 text-muted danger">{{'registration.email already exists' | translate }}</span>
+                              <span class="ps-2 text-muted danger">{{'registration.email already exists' | translate }}</span>
                           </div>
                       </form>
                   </div>
@@ -98,7 +98,7 @@
                     </div>
                   </div>
                   <div *ngIf="isFailEmail" class="card-block mx-auto">
-                    <span class="pl-2 text-muted danger">{{'registration.could not be sent to activate' | translate }}</span>
+                    <span class="ps-2 text-muted danger">{{'registration.could not be sent to activate' | translate }}</span>
                   </div>
               </div>
               </div>
