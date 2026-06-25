@@ -1,3 +1,4 @@
+import { filter } from 'rxjs/operators';
 import {
   Component,
   OnInit,
@@ -22,6 +23,7 @@ var fireRefreshEventOnWindow = function() {
 };
 
 @Component({
+    standalone: false,
     selector: 'app-land-page-layout',
     templateUrl: './land-page-layout.component.html',
     styleUrls: ['./land-page-layout.component.scss']
@@ -221,7 +223,7 @@ export class LandPageLayoutComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   ngAfterViewInit() {
-    this.router.events.filter((event: any) => event instanceof NavigationStart).subscribe(
+    this.router.events.pipe(filter((event: any) => event instanceof NavigationStart)).subscribe(
 
       event => {
         var tempUrl = (event.url).toString();

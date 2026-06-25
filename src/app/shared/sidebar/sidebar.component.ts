@@ -1,3 +1,4 @@
+import { filter } from 'rxjs/operators';
 import { Component, OnInit, Input, ViewChild, OnDestroy, ElementRef, Renderer2, AfterViewInit } from "@angular/core";
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
@@ -16,6 +17,7 @@ import { ApiDx29ServerService } from 'app/shared/services/api-dx29-server.servic
 import Swal from 'sweetalert2';
 
 @Component({
+    standalone: false,
   selector: "app-sidebar",
   templateUrl: "./sidebar.component.html",
   animations: customAnimations,
@@ -91,7 +93,7 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
     this.redirectUrl = this.authService.getRedirectUrl();
 
 
-    this.router.events.filter((event: any) => event instanceof NavigationEnd).subscribe(
+    this.router.events.pipe(filter((event: any) => event instanceof NavigationEnd)).subscribe(
 
       event => {
         var tempUrl= (event.url).toString().split('?');

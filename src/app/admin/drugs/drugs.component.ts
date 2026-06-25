@@ -4,9 +4,10 @@ import { RaitoService } from 'app/shared/services/raito.service';
 import { SearchService } from 'app/shared/services/search.service';
 import { SortService } from 'app/shared/services/sort.service';
 import * as chartsData from 'app/shared/configs/general-charts.config';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 @Component({
+    standalone: false,
     selector: 'app-drugs',
     templateUrl: './drugs.component.html',
     styleUrls: ['./drugs.component.scss'],

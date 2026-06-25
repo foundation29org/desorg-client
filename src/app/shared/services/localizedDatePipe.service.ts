@@ -3,6 +3,7 @@ import { Injectable, Pipe, PipeTransform } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
 @Pipe({
+    standalone: false,
     name: 'localizedDate',
     pure: false
 })

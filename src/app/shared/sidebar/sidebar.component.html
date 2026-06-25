@@ -1,7 +1,7 @@
 <!-- Sidebar Header starts -->
 <div class="sidebar-header">
     <div class="logo clearfix">
-        <a [routerLink]="redirectUrl" *ngIf="!isHomePage" class="logo-text float-left">
+        <a [routerLink]="redirectUrl" *ngIf="!isHomePage" class="logo-text float-start">
             <div class="logo-img" style="display:none;">
                 <img [src]=urlLogo />
             </div>
@@ -10,7 +10,7 @@
                 <!--<span class="font-large-2 text-bold-600" style="position: absolute;">Raito</span>-->
             </div>
         </a>
-        <span *ngIf="isHomePage" class="logo-text float-left">
+        <span *ngIf="isHomePage" class="logo-text float-start">
             <div class="logo-img" style="display:none;">
                 <img [src]=urlLogo />
             </div>

@@ -7,8 +7,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { EventsService } from 'app/shared/services/events.service';
 import { sha512 } from "js-sha512";
 import { Observable, of, OperatorFunction } from 'rxjs';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/toPromise';
 import { catchError, debounceTime, distinctUntilChanged, map, tap, switchMap, merge } from 'rxjs/operators'
 import { DateAdapter } from '@angular/material/core';
 import { DatePipe } from '@angular/common';
@@ -20,13 +18,14 @@ import { TermsConditionsPageComponent } from "../terms-conditions/terms-conditio
 import { DataProcessingAgreementComponent } from "../data-processing-agreement/data-processing-agreement.component";
 import { ApiDx29ServerService } from 'app/shared/services/api-dx29-server.service';
 import Swal from 'sweetalert2';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 export function getCulture() {
   return sessionStorage.getItem('culture');
 }
 
 @Component({
+    standalone: false,
   selector: 'app-register-page',
   templateUrl: './register-page.component.html',
   styleUrls: ['./register-page.component.scss'],

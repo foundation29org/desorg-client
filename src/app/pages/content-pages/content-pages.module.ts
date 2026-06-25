@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from "@angular/common";
 import { FormsModule } from '@angular/forms';
-import { CustomFormsModule } from 'ngx-custom-validators';
+import { EqualToValidatorModule } from 'app/shared/directives/equal-to-validator.module';
 import { ContentPagesRoutingModule } from "./content-pages-routing.module";
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -32,7 +32,7 @@ import { MyFilterPipe } from 'app/shared/services/my-filter.pipe';
         ContentPagesRoutingModule,
         FormsModule,
         TranslateModule,
-        CustomFormsModule,
+        EqualToValidatorModule,
         NgbModule,
         MatDatepickerModule,
         MatNativeDateModule,
@@ -51,6 +51,5 @@ import { MyFilterPipe } from 'app/shared/services/my-filter.pipe';
         PasswordValidator,
         MyFilterPipe
     ],
-    entryComponents:[TermsConditionsPageComponent, DataProcessingAgreementComponent]
 })
 export class ContentPagesModule { }

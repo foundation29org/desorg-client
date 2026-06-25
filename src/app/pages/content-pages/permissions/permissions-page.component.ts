@@ -6,9 +6,10 @@ import { HttpClient } from "@angular/common/http";
 import { TranslateService } from '@ngx-translate/core';
 import Swal from 'sweetalert2';
 import { sha512 } from "js-sha512";
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 @Component({
+    standalone: false,
     selector: 'app-permissions-page',
     templateUrl: './permissions-page.component.html',
     styleUrls: ['./permissions-page.component.scss']

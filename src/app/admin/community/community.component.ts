@@ -4,21 +4,20 @@ import { RaitoService } from 'app/shared/services/raito.service';
 import { DateService } from 'app/shared/services/date.service';
 import { Apif29BioService } from 'app/shared/services/api-f29bio.service';
 import { NgbModal, NgbModalRef, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
-import {Observable, of, OperatorFunction} from 'rxjs';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/toPromise';
+import {Observable, of, fromEvent, OperatorFunction} from 'rxjs';
 import { DateAdapter } from '@angular/material/core';
 import { SortService } from 'app/shared/services/sort.service';
 import { SearchService } from 'app/shared/services/search.service';
 import * as chartsData from 'app/shared/configs/general-charts.config';
-import { ColorHelper } from '@swimlane/ngx-charts';
+import { ColorHelper, ScaleType } from '@swimlane/ngx-charts';
 import Swal from 'sweetalert2';
 import { jsPDFService } from 'app/shared/services/jsPDF.service'
 import { ApiDx29ServerService } from 'app/shared/services/api-dx29-server.service';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 declare let html2canvas: any;
 
 @Component({
+    standalone: false,
     selector: 'app-community',
     templateUrl: './community.component.html',
     styleUrls: ['./community.component.scss'],
@@ -228,7 +227,7 @@ meses: any =
       }
     ));
 
-    this.eventSubscription = Observable.fromEvent(window, "scroll").subscribe(e => {
+    this.eventSubscription = fromEvent(window, "scroll").subscribe(e => {
       if($('#tabspills')){
           console.log($('#tabspills').height())
           if($('#tabspills').height()>720){
@@ -1091,13 +1090,13 @@ loadTranslationsElements() {
           // Get chartNames
           this.chartNames = this.lineChartDrugs.map((d: any) => d.name);
           // Convert hex colors to ColorHelper for consumption by legend
-          this.colors = new ColorHelper(this.lineChartColorScheme, 'ordinal', this.chartNames, this.lineChartColorScheme);
-          this.colors2 = new ColorHelper(this.lineChartOneColorScheme2, 'ordinal', this.chartNames, this.lineChartOneColorScheme2);
+          this.colors = new ColorHelper(this.lineChartColorScheme as any, ScaleType.Ordinal, this.chartNames, this.lineChartColorScheme);
+          this.colors2 = new ColorHelper(this.lineChartOneColorScheme2 as any, ScaleType.Ordinal, this.chartNames, this.lineChartOneColorScheme2);
           //newColor
           var tempColors = JSON.parse(JSON.stringify(this.lineChartColorScheme))
           var tempColors2 = JSON.parse(JSON.stringify(this.lineChartOneColorScheme2))
           tempColors.domain[this.chartNames.length]=tempColors2.domain[0];
-          this.colorsLineToll = new ColorHelper(tempColors, 'ordinal', this.chartNames, tempColors);
+          this.colorsLineToll = new ColorHelper(tempColors as any, ScaleType.Ordinal, this.chartNames, tempColors);
 
           this.normalizedChanged(this.normalized);
           if(this.events.length>0){

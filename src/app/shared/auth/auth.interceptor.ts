@@ -1,17 +1,15 @@
+import { throwError } from 'rxjs';
 import { Injectable, Injector } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient, HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs/Rx';
-import 'rxjs/add/observable/throw'
-import 'rxjs/add/operator/catch';
+import { Observable } from 'rxjs';
 
 import { AuthService } from './auth.service';
 import { TokenService } from './token.service';
 import { environment } from 'environments/environment';
 
 import { EventsService } from 'app/shared/services/events.service';
-import { takeUntil } from 'rxjs/operators';
-import * as decode from 'jwt-decode';
+import { takeUntil, catchError } from 'rxjs/operators';
 
 
 @Injectable()
@@ -80,11 +78,11 @@ export class AuthInterceptor implements HttpInterceptor {
     }*/
 
     // Pass on the cloned request instead of the original request.
-    return next.handle(authReq)
-      .catch((error, caught) => {
+    return next.handle(authReq).pipe(
+      catchError((error) => {
 
         if (error.status === 401) {
-          return Observable.throw(error);
+          return throwError(() => error);
         }
 
         if (error.status === 404 || error.status === 0) {
@@ -98,15 +96,16 @@ export class AuthInterceptor implements HttpInterceptor {
             eventsService.broadcast('http-error-external', 'no external conexion');
 
           }
-          return Observable.throw(error);
+          return throwError(() => error);
         }
 
         if (error.status === 419) {
-          return Observable.throw(error);
+          return throwError(() => error);
         }
 
         //return all others errors
-        return Observable.throw(error);
-      }) as any;
+        return throwError(() => error);
+      })
+    );
   }
 }

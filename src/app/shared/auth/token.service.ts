@@ -2,11 +2,14 @@ import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from "@angular/common/http";
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/map';
-import * as decode from 'jwt-decode';
+import { Observable, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import decode from 'jwt-decode';
 import { AuthService } from './auth.service';
+
+interface JwtPayload {
+  sub: string;
+}
 
 @Injectable()
 export class TokenService {
@@ -31,7 +34,7 @@ export class TokenService {
   isTokenValid():boolean{
     if(sessionStorage.getItem('token') && this.authService.getIdUser()!=undefined){
       if((this.authService.getToken() == sessionStorage.getItem('token'))&& this.authService.getIdUser()!=undefined){
-        const tokenPayload = decode(sessionStorage.getItem('token'));
+        const tokenPayload = decode<JwtPayload>(sessionStorage.getItem('token'));
         if(tokenPayload.sub ==this.authService.getIdUser()){
           return true;
         }else{
@@ -47,14 +50,13 @@ export class TokenService {
 
   //deprecated
   testToken(): Observable<boolean>{
-    return this.http.get(environment.api+'/api/testToken')
-      .map( (res : any) => {
+    return this.http.get(environment.api+'/api/testToken').pipe(
+        map((res: any) => {
         console.log(res);
           return res;
-       }, (err) => {
-         console.log(err);
-         return false;
-       }
+       }),
+        catchError((err) => { console.log(err);
+         return of(false); })
       );
   }
 

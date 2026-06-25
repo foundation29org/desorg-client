@@ -14,6 +14,7 @@ import { ConfigService } from "../services/config.service";
 import { Subscription } from "rxjs";
 
 @Component({
+    standalone: false,
   selector: "app-customizer",
   templateUrl: "./customizer.component.html",
   styleUrls: ["./customizer.component.scss"]
