@@ -117,8 +117,13 @@ export class DataManagementComponent implements OnInit{
   }
 
   createFile(res){
-    let json2csvCallback = function (err, csv) {
-      if (err) throw err;
+    try {
+      const csv = json2csv(res, {
+        expandArrayObjects: true,
+        delimiter: { field: ';' },
+        excelBOM: true,
+        preventCsvInjection: true
+      });
       var blob = new Blob([csv], {type: "text/csv;charset=utf-8;"});
     var url  = URL.createObjectURL(blob);
     var p = document.createElement('p');
@@ -134,10 +139,10 @@ export class DataManagementComponent implements OnInit{
 
     document.getElementById('content2').appendChild(a);
     document.getElementById("download").click();
-  }.bind(this);
-
-  var options ={'expandArrayObjects' :true, "delimiter": { 'field': ';' }, excelBOM: true}
-  json2csv(res, json2csvCallback, options);
+    } catch (err) {
+      console.error('Could not create CSV file', err);
+      this.toastr.error('Could not create CSV file');
+    }
 
   }
 
